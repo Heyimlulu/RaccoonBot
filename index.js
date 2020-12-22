@@ -28,57 +28,48 @@ const listeningJSON = require('./json/status/listening.json');
 
 client.commands = new Discord.Collection();
 
+// set new items in the Collection
+// with the key as the command name and the value as the exported module
+
+// fun
 const commandFilesFun = fs.readdirSync('./commands/fun').filter(file => file.endsWith('.js'));
 for (const file of commandFilesFun) {
     const command = require(`./commands/fun/${file}`);
-
-    // set a new item in the Collection
-    // with the key as the command name and the value as the exported module
     client.commands.set(command.name, command);
 }
 
+// utility
 const commandFilesUtility = fs.readdirSync('./commands/utility').filter(file => file.endsWith('.js'));
 for (const file of commandFilesUtility) {
     const command = require(`./commands/utility/${file}`);
-
-    // set a new item in the Collection
-    // with the key as the command name and the value as the exported module
     client.commands.set(command.name, command);
 }
 
+// general
 const commandFilesGeneral = fs.readdirSync('./commands/general').filter(file => file.endsWith('.js'));
 for (const file of commandFilesGeneral) {
     const command = require(`./commands/general/${file}`);
-
-    // set a new item in the Collection
-    // with the key as the command name and the value as the exported module
     client.commands.set(command.name, command);
 }
 
+// admin
 const commandFilesAdmin = fs.readdirSync('./commands/admin').filter(file => file.endsWith('.js'));
 for (const file of commandFilesAdmin) {
     const command = require(`./commands/admin/${file}`);
-
-    // set a new item in the Collection
-    // with the key as the command name and the value as the exported module
     client.commands.set(command.name, command);
 }
 
+// voice
 const commandFilesVoice = fs.readdirSync('./commands/voice').filter(file => file.endsWith('.js'));
 for (const file of commandFilesVoice) {
     const command = require(`./commands/voice/${file}`);
-
-    // set a new item in the Collection
-    // with the key as the command name and the value as the exported module
     client.commands.set(command.name, command);
 }
 
+// owner
 const commandFilesOwner = fs.readdirSync('./commands/owner').filter(file => file.endsWith('.js'));
 for (const file of commandFilesOwner) {
     const command = require(`./commands/owner/${file}`);
-
-    // set a new item in the Collection
-    // with the key as the command name and the value as the exported module
     client.commands.set(command.name, command);
 }
 
@@ -93,30 +84,30 @@ client.on('ready', () => {
     console.log('===========[ READY ]===========');
 
     setInterval(() => {
-        let activityTypes = ['PLAYING','STREAMING','LISTENING']
-        let randomType = activityTypes[Math.floor((Math.random()*activityTypes.length))]
+        let activityTypes = ['PLAYING', 'STREAMING', 'LISTENING']
+        let randomType = activityTypes[Math.floor((Math.random() * activityTypes.length))]
 
-        if (randomType == 'PLAYING'){
+        if (randomType == 'PLAYING') {
 
             // set var for playingJSON file
             var playing = playingJSON;
 
-            let activity = playing[Math.floor(Math.random()*(playing.length - 1) + 1)];
-            client.user.setActivity(activity, {type: "PLAYING"});
+            let activity = playing[Math.floor(Math.random() * (playing.length - 1) + 1)];
+            client.user.setActivity(activity, { type: "PLAYING" });
         } else if (randomType == 'STREAMING') {
 
             // set var for streamingJSON file
             var streaming = streamingJSON;
 
-            let activity = streaming[Math.floor(Math.random()*(streaming.length - 1) + 1)];
-            client.user.setActivity(activity, {type: "STREAMING", url: "https://www.twitch.tv/RacoonBot_", name: "RacoonBot_ on Twitch"});
+            let activity = streaming[Math.floor(Math.random() * (streaming.length - 1) + 1)];
+            client.user.setActivity(activity, { type: "STREAMING", url: "https://www.twitch.tv/RacoonBot_", name: "RacoonBot_ on Twitch" });
         } else if (randomType == 'LISTENING') {
 
             // set var for streamingJSON file
             var listening = listeningJSON;
 
-            let activity = listening[Math.floor(Math.random()*(listening.length - 1) + 1)];
-            client.user.setActivity(activity, {type: "LISTENING"});
+            let activity = listening[Math.floor(Math.random() * (listening.length - 1) + 1)];
+            client.user.setActivity(activity, { type: "LISTENING" });
         }
     }, 1800000) // <-- run this every 30 minutes
 });
@@ -150,7 +141,7 @@ client.on('message', message => {
         client.commands.get(command).execute(message, args);
     } catch (error) {
         console.error(error);
-        message.reply('there was an error trying to execute that command!');
+        message.reply('There was an error trying to execute that command!');
     }
     console.log(message.content);
 
