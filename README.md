@@ -7,7 +7,7 @@ Multifunctional discord bot made in Javascript [DEVELOPMENT]
 ```
 {
   "token": "your-discord-bot-token", 
-  "prefix": "racoon "
+  "prefix": "racoondev "
 }
 ```
 
