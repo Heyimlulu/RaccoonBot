@@ -3,21 +3,21 @@ const config = require("./json/config.json");
 const fs = require('fs');
 const client = new Discord.Client();
 
+// ===================================== Commands ===================================== //
+
 // import admin commands
-//const welcome = require('./commands/admin/welcome');
-//const leave = require('./commands/admin/leave');
 const kick = require('./commands/admin/kick');
 const ban = require('./commands/admin/ban');
 const unban = require('./commands/admin/unban');
 
+// import utility commands
 const stats = require('./commands/utility/stats');
 const voice = require('./commands/voice/music');
 const status = require('./commands/owner/status');
 const feedback = require('./commands/utility/feedback');
-const dm = require('./commands/owner/dm');
-// const total = require('./commands/owner/total');
 
-// const counter = require('./counter');
+// import owner commands
+const dm = require('./commands/owner/dm');
 
 // JSON file for activities status
 const playingJSON = require('./json/status/playing.json');
@@ -114,19 +114,22 @@ client.on('ready', () => {
 
 // ================================= On message received ================================= //
 
-//welcome(client);
-//leave(client);
+// load admin commands
 kick(client);
 ban(client);
 unban(client);
-stats(client);
-voice(client);
-status(client);
-feedback(client);
-dm(client);
-// total(client);
 
-// counter(client);
+// load owner commands
+status(client);
+dm(client);
+
+// load utility commands
+stats(client);
+feedback(client);
+
+// load voice command
+voice(client);
+
 
 client.on('message', message => {
 

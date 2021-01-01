@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const help = require('../../json/help.json');
+const help = require('../../json/commands/utility/help.json');
 const config = require('../../json/config.json');
 
 module.exports = {

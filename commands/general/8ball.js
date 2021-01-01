@@ -1,4 +1,4 @@
-const answers = require('../../json/8ball.json');
+const answers = require('../../json/commands/general/8ball.json');
 const config = require('../../json/config.json');
 
 module.exports = {

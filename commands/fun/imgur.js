@@ -1,3 +1,7 @@
+// Read .env file and initialize variable
+const dotenv = require('dotenv');
+dotenv.config();
+
 const fetch = require('node-fetch');
 const config = require("../../json/config.json");
 
@@ -13,7 +17,7 @@ module.exports = {
             message.reply("Invalid search argument");
         } else {
             fetch(`https://api.imgur.com/3/gallery/search/viral/top/0?q=${imgurSearch}`, {
-                headers: {'Authorization': 'Client-ID b4b6b4e0f8b1631'},
+                headers: {'Authorization': `Client-ID ${process.env.IMGUR_SECRET_KEY}`},
             }).then((response) => {
                 return response.json();
             }).then((response) => {

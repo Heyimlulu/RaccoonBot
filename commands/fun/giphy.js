@@ -1,3 +1,7 @@
+// Read .env file and initialize variable
+const dotenv = require('dotenv');
+dotenv.config();
+
 const fetch = require('node-fetch');
 const config = require("../../json/config.json");
 
@@ -12,7 +16,7 @@ module.exports = {
         if (giphySearch == '') {
             message.reply("Invalid search argument");
         } else {
-            fetch(`https://api.giphy.com/v1/gifs/search?api_key=ui3ZqsloOOlzo7mcfjhWcwOc89vgo9u0&q=${giphySearch}`).then((response) => {
+            fetch(`https://api.giphy.com/v1/gifs/search?api_key=${process.env.GIPHY_SECRET_KEY}=${giphySearch}`).then((response) => {
                 return response.json();
             }).then((response) => {
                 if (response.success == 'false')

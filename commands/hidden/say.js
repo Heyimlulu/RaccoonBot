@@ -1,4 +1,4 @@
-const say = require('../../json/say.json');
+const say = require('../../json/commands/general/say.json');
 
 module.exports = {
     name: 'say',

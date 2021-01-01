@@ -1,4 +1,4 @@
-const racoonFacts = require('../../json/racoonFacts.json');
+const racoonFacts = require('../../json/commands/general/fact.json');
 
 module.exports = {
     name: 'fact',

@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const fs = require('fs');
-const todo = require('../../json/todo.json');
+const todo = require('../../json/commands/general/todo.json');
 
 module.exports = {
     name: 'todo',
