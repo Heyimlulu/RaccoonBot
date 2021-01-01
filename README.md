@@ -13,6 +13,10 @@ Multifunctional discord bot made in Javascript [DEVELOPMENT]
 
 ## .env-example 
 
+- Rename ``.env-example`` to ``.env``
+
+- Replace ``*`` with their own API Secret Key
+
 ```
 GIPHY_SECRET_KEY = **************************
 IMGUR_SECRET_KEY = **************************
