@@ -15,8 +15,7 @@ module.exports = {
         message.channel.send('Let me think about it...').then((msg) => {
             setTimeout(() => {
                 var reply = answers[Math.floor(Math.random()*answers.length)];
-                msg.delete(); // Delete previous message
-                message.reply(reply);
+                msg.edit(reply);
             }, 2000);
         });
     },

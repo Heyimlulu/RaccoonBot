@@ -11,7 +11,11 @@ module.exports = {
             return message.reply('');
         }
 
-        message.delete(); // Delete user message
-        message.channel.send(sayd); // Send the message from input
+        try {
+            message.delete(); // Delete user message
+            message.channel.send(sayd); // Send message
+        } catch {
+            message.channel.send("I do not have permissions to delete message");
+        }
     },
 };
