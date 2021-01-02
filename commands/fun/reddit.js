@@ -27,9 +27,12 @@ module.exports = {
                 if (response.data.children[i].data.over_18 == true && !message.channel.nsfw)
                     return message.channel.send('No nsfw');
 
-                message.channel.send('Please wait...').then((msg) => {
+                const loadingEmbed = new Discord.MessageEmbed()
+                    .setColor("RANDOM")
+                    .setTitle('Please wait...');
+
+                message.channel.send(loadingEmbed).then((msg) => {
                     setTimeout(() => {
-                        msg.delete(); // Delete previous message
                         const redditEmbed = new Discord.MessageEmbed()
                         redditEmbed.setColor("RANDOM")
                             .setTitle(response.data.children[i].data.title)
@@ -37,7 +40,8 @@ module.exports = {
                             .setURL('https://reddit.com' + response.data.children[i].data.permalink)
                             .setImage(response.data.children[i].data.url_overridden_by_dest)
                             .setFooter(`/r/${response.data.children[i].data.subreddit} | ⬆ ${response.data.children[i].data.ups} 🗨 ${response.data.children[i].data.num_comments}`);
-                        message.channel.send(redditEmbed); // Send new message
+
+                        msg.edit(redditEmbed); // Send new message
                     }, 2000); // Wait 2 seconds before editing message
                 })
             });

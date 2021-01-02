@@ -27,7 +27,6 @@ module.exports = {
                 message.channel.send('Please wait...').then((msg) => {
                     setTimeout(() => {
                         const i = Math.floor((Math.random() * response.data.length));
-                        msg.delete(); // Delete previous message
 
                         if (response.data[i].hasOwnProperty('title')){
                             var noTitle = response.data[i].title;
@@ -35,7 +34,7 @@ module.exports = {
                             var noTitle = 'Untitled';
                         }
 
-                        message.channel.send(`**${noTitle}**\n${response.data[i].link}`); // Edit from the previous message
+                        msg.edit(`**${noTitle}**\n${response.data[i].link}`); // Edit message
                     }, 2000);
                 });
 
