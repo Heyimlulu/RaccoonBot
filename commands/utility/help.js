@@ -47,12 +47,6 @@ module.exports = {
 
             return message.channel.send(helpCommandEmbed);
         }
-        if (message.content.startsWith(`${config.prefix}help explosm`)){
-            helpCommandEmbed.setTitle(help.fun.explosm.name)
-                .setDescription(help.fun.explosm.description)
-
-            return message.channel.send(helpCommandEmbed);
-        }
         if (message.content.startsWith(`${config.prefix}help giphy`)){
             helpCommandEmbed.setTitle(help.fun.giphy.name)
                 .setDescription(help.fun.giphy.description)
@@ -205,7 +199,7 @@ module.exports = {
             .setTitle('Help commands list')
             .setDescription('Use **racoon help command** for commands detail and example, E.g. racoon help role')
             .addField('⚡\u2000Admin commands', `\u0060${help.admin.ban.name}\u0060 \u0060${help.admin.unban.name}\u0060 \u0060${help.admin.kick.name}\u0060`, false) // Admin commands
-            .addField('🎉\u2000Fun commands', `\u0060${help.fun.cute.name}\u0060 \u0060${help.fun.explosm.name}\u0060 \u0060${help.fun.giphy.name}\u0060 \u0060${help.fun.imgur.name}\u0060 \u0060${help.fun.love.name}\u0060 \u0060${help.fun.reddit.name}\u0060 \u0060${help.fun.steam.name}\u0060`, false) // Fun commands
+            .addField('🎉\u2000Fun commands', `\u0060${help.fun.cute.name}\u0060 \u0060${help.fun.giphy.name}\u0060 \u0060${help.fun.imgur.name}\u0060 \u0060${help.fun.love.name}\u0060 \u0060${help.fun.reddit.name}\u0060 \u0060${help.fun.steam.name}\u0060`, false) // Fun commands
             .addField('📝\u2000General commands', `\u0060${help.general["8ball"].name} \u0060 \u0060${help.general.advice.name}\u0060 \u0060${help.general.bing.name}\u0060 \u0060${help.general.fact.name}\u0060 \u0060${help.general.flip.name}\u0060 \u0060${help.general.roll.name}\u0060  \u0060${help.general.sayd.name}\u0060`, false) // General commands
             .addField('🔩\u2000Utility commands', `\u0060${help.utility.download.name}\u0060 \u0060${help.utility.feedback.name}\u0060 \u0060${help.utility.info.name}\u0060 \u0060${help.utility.invite.name}\u0060  \u0060${help.utility.ping.name}\u0060 \u0060${help.utility.role.name}\u0060 \u0060${help.utility.serverinfo.name}\u0060 \u0060${help.utility.stats.name}\u0060 \u0060${help.utility.upvote.name}\u0060 \u0060${help.utility.userinfo.name}\u0060`, false) // Utility commands
 

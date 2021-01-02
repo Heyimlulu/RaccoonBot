@@ -6,7 +6,7 @@ module.exports = {
     category: 'fun',
     execute(message) {
         extract({ uri: 'http://explosm.net/rcg' }, (err, res) => {
-            return message.channel.send({files: [res.ogImage]});
+            message.channel.send({files: [res.ogImage]});
         });
     },
 };
