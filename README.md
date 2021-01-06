@@ -22,31 +22,18 @@ Multifunctional discord bot made in Javascript [DEV REPOSITORY]
 ### Prerequisites
 
 You need to do the following
-
 - Install [NodeJS](https://nodejs.org/) on your computer
-
 - Install the DiscordJS module. You can check their official website and documentation [here.](https://discord.js.org/#/)
-
   - You can also check their guide [here.](https://discordjs.guide/)
-
 - Install theses modules to get the music command working
-
   - discordjs/opus
-  
   - ffmpeg, ffmpeg-static, flutent-ffmpeg
-  
   - ytdl-core
-  
 - Install the youtube-dl module for the download command
-
 - Register to theses websites to get your API key 
-
   - imgur 
-  
   - giphy
-  
   - reddit 
-  
   - steam
 
 ### Installing
@@ -57,9 +44,9 @@ npm install
 
 ### Running
 
-#### config.json 
+> config.json 
 
-Enter your bot token in the **config.json** file. You can find it in your applications tab on [Discord Developer Portal](https://discord.com/developers/applications)
+First enter your bot token. You can find it in your applications tab on [Discord Developer Portal](https://discord.com/developers/applications)
 
 ```
 {
@@ -68,7 +55,7 @@ Enter your bot token in the **config.json** file. You can find it in your applic
 }
 ```
 
-#### .env-example 
+> .env-example 
 
 - Rename ``.env-example`` to ``.env``
 - Replace ``*`` with your own API Secret Key
@@ -127,3 +114,5 @@ npm start
 ## Author
 
 - Heyimlulu
+
+## License
