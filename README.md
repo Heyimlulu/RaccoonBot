@@ -35,7 +35,7 @@ STEAM_SECRET_KEY = **************************
 
 <img height="300px" src="https://download.logo.wine/logo/Microsoft_Azure/Microsoft_Azure-Logo.wine.png">
 
-<img height="200px" src="https://lh3.googleusercontent.com/proxy/o5xl0QK1DWHBhtwC83X2HCmnB7JBC5RhEBbmjJ8RusLCzbnqBwYwAkL6d7OGHZoHPteBawFA0DZaog3GcYQvYOQQyl9b9x_rbHU00-kzQb3NdefkUOGgHui6Jg">
+<img height="200px" src="https://www.raspberrypi.org/wp-content/uploads/2011/10/Raspi-PGB001.png">
 
 ## Author
 
