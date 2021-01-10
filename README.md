@@ -108,11 +108,8 @@ npm start
 
 ## Hosted on
 
-<img height="300px" src="https://download.logo.wine/logo/Microsoft_Azure/Microsoft_Azure-Logo.wine.png">
-<img height="200px" src="https://www.raspberrypi.org/wp-content/uploads/2011/10/Raspi-PGB001.png">
+<img height="200px" src="https://bilalbudhani.com/content/images/2017/11/heroku.png">
 
 ## Author
 
 - Heyimlulu
-
-## License
