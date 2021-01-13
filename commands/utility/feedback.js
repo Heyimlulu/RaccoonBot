@@ -18,7 +18,7 @@ module.exports = (client) => {
                 return message.channel.send('Your account is too new to be able to use this command!');
             }
 
-            const user = client.users.resolve(`265896171384340480`); // <-- It will sent to my discord ID <-- Yuki 💜#0001
+            const user = client.users.resolve(`265896171384340480`); // <-- It will sent to my discord ID <-- Yuki 🐺#0001
             //const user = client.users.cache.get('265896171384340480');
 
             const embedDM = new Discord.MessageEmbed();

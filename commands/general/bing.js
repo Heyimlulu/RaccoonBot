@@ -6,7 +6,6 @@ module.exports = {
     category: 'fun',
     execute(message) {
         extract({ uri: 'https://bing.gifposter.com/' }, (err, res) => {
-            //console.log(res);
             return message.channel.send({files: [res.twitterImage]});
         });
     },

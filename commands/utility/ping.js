@@ -8,16 +8,19 @@ module.exports = {
 
         var ping = Date.now() - message.createdTimestamp + " ms";
 
-        message.channel.send('Pinging...').then((msg) => {
+        const pingingEmbed = new Discord.MessageEmbed()
+            .setColor("RANDOM")
+            .setTitle('Pinging...');
+
+        message.channel.send(pingingEmbed).then((msg) => {
             setTimeout(() => {
-                msg.delete(); // Delete previous message
-                const Embed = new Discord.MessageEmbed()
+                const pongEmbed = new Discord.MessageEmbed()
                     .setColor('RANDOM')
                     .setTitle('Pong 🏓')
                     .setDescription("Your ping is " + `${ping}`)
                     .setTimestamp()
 
-                message.channel.send(Embed); // Send new message
+                msg.edit(pongEmbed); // Edit message
             }, 1000); // Wait 1 seconds before editing message
         })
     }

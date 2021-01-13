@@ -1,6 +1,9 @@
 const fetch = require('node-fetch');
 const config = require("../../json/config.json");
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 module.exports = {
     name: 'giphy',
     description: 'Send some random gif from giphy!',
@@ -12,7 +15,7 @@ module.exports = {
         if (giphySearch == '') {
             message.reply("Invalid search argument");
         } else {
-            fetch(`https://api.giphy.com/v1/gifs/search?api_key=ui3ZqsloOOlzo7mcfjhWcwOc89vgo9u0&q=${giphySearch}`).then((response) => {
+            fetch(`https://api.giphy.com/v1/gifs/search?api_key=${process.env.GIPHY_SECRET_KEY}=${giphySearch}`).then((response) => {
                 return response.json();
             }).then((response) => {
                 if (response.success == 'false')
@@ -21,7 +24,6 @@ module.exports = {
                 message.channel.send('Please wait...').then((msg) => {
                     setTimeout(() => {
                         const i = Math.floor((Math.random() * response.data.length));
-                        msg.delete(); // Delete previous message
 
                         if (response.data[i].hasOwnProperty('title')){
                             var noTitle = response.data[i].title;
@@ -29,7 +31,7 @@ module.exports = {
                             var noTitle = 'Untitled';
                         }
 
-                        message.channel.send(`**${noTitle}**\n${response.data[i].url}`); // Edit from the previous message
+                        msg.edit(`**${noTitle}**\n${response.data[i].url}`); // Edit message
                     }, 2000);
                 });
 

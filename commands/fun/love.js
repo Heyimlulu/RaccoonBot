@@ -20,7 +20,6 @@ module.exports = {
                 .addField(`**${message.author.tag}** loves **${User.tag}** this much`, `💟 ${Math.floor(love)}%\n\n${loveLevel}`)
                 .setThumbnail(User.displayAvatarURL())
 
-            message.delete()
             message.channel.send(loveEmbed)
         } else {
             message.reply(`You did not specified a user!`)

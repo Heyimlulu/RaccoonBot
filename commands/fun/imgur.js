@@ -1,6 +1,9 @@
 const fetch = require('node-fetch');
 const config = require("../../json/config.json");
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 module.exports = {
     name: 'imgur',
     description: 'Send some random images from imgur!',
@@ -13,7 +16,7 @@ module.exports = {
             message.reply("Invalid search argument");
         } else {
             fetch(`https://api.imgur.com/3/gallery/search/viral/top/0?q=${imgurSearch}`, {
-                headers: {'Authorization': 'Client-ID b4b6b4e0f8b1631'},
+                headers: {'Authorization': `Client-ID ${process.env.IMGUR_SECRET_KEY}`},
             }).then((response) => {
                 return response.json();
             }).then((response) => {
@@ -23,7 +26,6 @@ module.exports = {
                 message.channel.send('Please wait...').then((msg) => {
                     setTimeout(() => {
                         const i = Math.floor((Math.random() * response.data.length));
-                        msg.delete(); // Delete previous message
 
                         if (response.data[i].hasOwnProperty('title')){
                             var noTitle = response.data[i].title;
@@ -31,7 +33,7 @@ module.exports = {
                             var noTitle = 'Untitled';
                         }
 
-                        message.channel.send(`**${noTitle}**\n${response.data[i].link}`); // Edit from the previous message
+                        msg.edit(`**${noTitle}**\n${response.data[i].link}`); // Edit message
                     }, 2000);
                 });
 

@@ -2,19 +2,23 @@ const Discord = require('discord.js');
 const fetch = require('node-fetch');
 const config = require("../../json/config.json");
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 module.exports = {
     name: 'steam',
     description: 'Send stats for a steam user',
     category: 'fun',
     execute(message) {
 
+        let steamKey = process.env.STEAM_SECRET_KEY;
         let steamSearch = message.content.split(`${config.prefix}steam`).join("")
 
         if (steamSearch == '') {
             message.reply("Invalid steamID!");
         } else {
             // Get player summaries
-            fetch(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=51A077A7E3AAED89CDD9946AE5560A4C&steamids=${steamSearch}`)
+            fetch(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${steamKey}&steamids=${steamSearch}`)
                 .then((response) => {
                     return response.json(); // <-- return a json response
                 }).then((response) => {
@@ -26,25 +30,25 @@ module.exports = {
                     }).then((responseCheck) => {
 
                     // Get friend list
-                    fetch(`http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=51A077A7E3AAED89CDD9946AE5560A4C&steamid=${steamSearch}&relationship=friend`)
+                    fetch(`http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=${steamKey}&steamid=${steamSearch}&relationship=friend`)
                         .then((response) => {
                             return response.json(); // <-- return a json file
                         }).then((responseFriend) => {
 
                         // Get owned games
-                        fetch(`http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=51A077A7E3AAED89CDD9946AE5560A4C&steamid=${steamSearch}&format=json`)
+                        fetch(`http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${steamKey}&steamid=${steamSearch}&format=json`)
                             .then((response) => {
                                 return response.json(); // <-- return a json file
                             }).then((responseGame) => {
 
                             // Get player bans
-                            fetch(`http://api.steampowered.com/ISteamUser/GetPlayerBans/v1/?key=51A077A7E3AAED89CDD9946AE5560A4C&steamids=${steamSearch}`)
+                            fetch(`http://api.steampowered.com/ISteamUser/GetPlayerBans/v1/?key=${steamKey}&steamids=${steamSearch}`)
                                 .then((response) => {
                                     return response.json(); // <-- return a json file
                                 }).then((responseVAC) => {
 
                                 // Get recently played game
-                                fetch(`http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=51A077A7E3AAED89CDD9946AE5560A4C&steamid=${steamSearch}&format=json`)
+                                fetch(`http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=${steamKey}&steamid=${steamSearch}&format=json`)
                                     .then((response) => {
                                         return response.json(); // <-- return a json file
                                     }).then((responseRecentGame) => {
@@ -149,10 +153,12 @@ module.exports = {
                                     const unixTime = response.response.players[0].timecreated;
                                     const dateCreatedat = new Date(unixTime * 1000);
 
+                                    const loadingEmbed = new Discord.MessageEmbed()
+                                        .setColor("RANDOM")
+                                        .setTitle('Please wait...');
 
-                                    message.channel.send('Fetching informations...').then((msg) => {
+                                    message.channel.send(loadingEmbed).then((msg) => {
                                         setTimeout(() => {
-                                            msg.delete();
                                             // Display result in a Message Embed
                                             const steamEmbed = new Discord.MessageEmbed()
                                                 .setColor("RANDOM")
@@ -172,8 +178,8 @@ module.exports = {
                                                 .addField('Created at', dateCreatedat, false)
                                                 .setThumbnail(response.response.players[0].avatarfull)
 
-                                            message.channel.send(steamEmbed);
-                                        }, 1000);
+                                            msg.edit(steamEmbed); // Edit message
+                                        }, 2000); // Wait 2 seconds before editing message
                                     })
                                 })
                             })
