@@ -1,11 +1,9 @@
 const Discord = require('discord.js');
-
-// Read .env file and initialize variable
-const dotenv = require('dotenv');
-dotenv.config();
-
 const fetch = require('node-fetch');
 const config = require("../../json/config.json");
+
+const dotenv = require('dotenv');
+dotenv.config();
 
 module.exports = {
     name: 'steam',

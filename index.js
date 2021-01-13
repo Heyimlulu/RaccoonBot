@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const config = require("./json/config.json");
 const fs = require('fs');
 const client = new Discord.Client();
+const { Client } = require('pg');
 
 // ===================================== Commands ===================================== //
 
@@ -140,17 +141,38 @@ client.on('message', message => {
 
     if (!client.commands.has(command)) return;
 
+    var query = `INSERT INTO logs(command) VALUES('${message.content}')`
+
+    //console.log(query);
+
+    pgClient.query(
+        query,
+        (err, res) => {
+            console.log(err, res);
+            //pgClient.end();
+        }
+    );
+
     try {
         client.commands.get(command).execute(message, args);
     } catch (error) {
         console.error(error);
         message.reply('There was an error trying to execute that command!');
     }
-    console.log(message.content);
-
 });
 
 // ======================================= Bot logon ======================================= //
 
+// Database connection
+const pgClient = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false
+    }
+});
+
+pgClient.connect();
+
+// Discord bot connection
 //client.login(config.token);
 client.login(process.env.BOT_TOKEN);

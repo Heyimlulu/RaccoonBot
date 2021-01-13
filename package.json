@@ -17,8 +17,9 @@
     "fluent-ffmpeg": "^2.1.2",
     "meta-extractor": "^2.0.0",
     "node-fetch": "^2.6.1",
-    "ytdl-core": "^3.3.0",
-    "youtube-dl": "^3.0.2"
+    "pg": "^8.5.1",
+    "youtube-dl": "^3.0.2",
+    "ytdl-core": "^3.3.0"
   },
   "devDependencies": {
     "@google-cloud/text-to-speech": "^3.1.1",
