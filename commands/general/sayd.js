@@ -8,7 +8,7 @@ module.exports = {
         let sayd = message.content.split(`${config.prefix}sayd`).join("").trim(); // Listen to user's input
 
         if (!sayd) {
-            return message.reply('');
+            return message.channel.send('What do you want me to say ?');
         }
 
         try {

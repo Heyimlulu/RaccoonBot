@@ -65,6 +65,11 @@
       "name": "bing",
       "description": "Get the wallpaper of the day from Bing"
     },
+    "codeblock": {
+      "name": "codeblock",
+      "description": "Denote a specific programming language for syntax highlighting",
+      "example": "racoon codeblock <programming language> <snippet code>"
+    },
     "fact": {
       "name": "fact",
       "description": "Send some random racoon facts"
