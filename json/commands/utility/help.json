@@ -50,6 +50,11 @@
       "name": "steam",
       "description": "Display some stats for a steam user",
       "example": "racoon steam userSteamid"
+    },
+    "urban": {
+      "name": "urban",
+      "description": "Fetch an article from urban dictionary",
+      "example": "racoon urban <article>"
     }
   },
   "general": {
