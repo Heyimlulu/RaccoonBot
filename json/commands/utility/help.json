@@ -65,10 +65,10 @@
       "name": "bing",
       "description": "Get the wallpaper of the day from Bing"
     },
-    "codeblock": {
-      "name": "codeblock",
-      "description": "Denote a specific programming language for syntax highlighting",
-      "example": "racoon codeblock <programming language> <snippet code>"
+    "block": {
+      "name": "block",
+      "description": "Send a message in a block",
+      "example": "racoon block <text>"
     },
     "fact": {
       "name": "fact",
@@ -86,6 +86,11 @@
       "name": "sayd",
       "description": "Write something you want the bot to repeat",
       "example": "racoon sayd Hello world!"
+    },
+    "spoiler": {
+      "name": "spoiler",
+      "description": "Send a message using the spoiler tag",
+      "example": "racoon spoiler <text>"
     }
   },
   "utility": {

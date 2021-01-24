@@ -1,23 +1,30 @@
 const config = require('../../json/config.json');
+
 module.exports = {
-    name: 'codeblock',
-    description: 'Denote a specific programming language for syntax highlighting',
+    name: 'block',
+    description: 'Send a message in a block',
     category: 'general',
     execute(message, args) {
 
-        let code = message.content.split(`${config.prefix}codeblock ${args[0]}`).join("").trim();
+        let text = args.slice(config.prefix).join(' ').trim();
 
-        if (!code) {
-            return message.channel.send(`What code snippet do you want to share, ${message.author}?`);
+        if (!text) {
+            return message.channel.send(`Block cannot be empty, ${message.author}`);
         }
 
-        if (!args.length) {
-            return message.channel.send(`You didn't provide a programming language, ${message.author}.`);
+        /*
+        try {
+            message.delete(); // Delete message
+            message.channel.send(`**${message.author.tag}**\n` + '```' + `${args[0]}\n` + `${text.slice(args[0].length)}` + '```');
+        } catch {
+            message.channel.send("I do not have permissions to delete message");
         }
+
+         */
 
         try {
             message.delete(); // Delete message
-            message.channel.send(`**${message.author.tag}**\n` + '```' + `${args[0]}\n` + `${code}` + '```');
+            message.channel.send(`**${message.author.tag}**\n` + '```' + `${text}` + '```');
         } catch {
             message.channel.send("I do not have permissions to delete message");
         }
