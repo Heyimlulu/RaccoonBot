@@ -2,6 +2,9 @@ const Discord = require('discord.js');
 const fetch = require('node-fetch');
 const config = require("../../json/config.json");
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 module.exports = {
     name: 'urban',
     description: `Fetch an article from urban dictionary`,
@@ -17,14 +20,13 @@ module.exports = {
         fetch(`https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=${urban}`, {
             "method": "GET",
             "headers": {
-                "x-rapidapi-key": "12c0aa790amsh33a3e061069f3eep1e856ajsn32d62fb876b6",
+                "x-rapidapi-key": process.env.URBAN_DICTIONARY_SECRET_KEY,
                 "x-rapidapi-host": "mashape-community-urban-dictionary.p.rapidapi.com"
             }
         }).then(response => {
             return response.json();
         }).then((response) => {
             const i = Math.floor(Math.random() * Math.floor(10));
-            console.log(response.list[i]);
 
             const loading = new Discord.MessageEmbed()
                 .setColor("RANDOM")
