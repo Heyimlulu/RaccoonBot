@@ -65,6 +65,9 @@ First enter your bot token. You can find it in your applications tab on [Discord
 GIPHY_SECRET_KEY = **************************
 IMGUR_SECRET_KEY = **************************
 STEAM_SECRET_KEY = **************************
+URBAN_DICTIONARY_SECRET_KEY = **************************
+DATABASE_URL = **************************
+BOT_TOKEN = **************************
 ```
 
 Now you can run the bot with
