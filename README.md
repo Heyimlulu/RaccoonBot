@@ -1,4 +1,4 @@
-# RacoonBot-Dev
+# RacoonBot-Dev <img height="25px" src="https://emoji.gg/assets/emoji/6817_Discord_Verified.png">
 
 Multifunctional discord bot made in Javascript [DEV REPOSITORY]
 
@@ -35,6 +35,7 @@ You need to do the following
   - giphy
   - reddit 
   - steam
+  - RapidAPI for Urban Dictionary
 
 ### Installing
 
@@ -82,6 +83,7 @@ npm start
 - Get a random image from [imgur](https://giphy.com/) and  [giphy.](https://imgur.com/)
 - Get a random [subreddit.](https://www.reddit.com/)
 - Get player stats from [steam.](https://store.steampowered.com/)
+- Get an article from [Urban Dictionary](https://www.urbandictionary.com/)
 - Measure your cuteness with the Cute o'meter
 - Show for how much you love someone with the *love* command
 - Auto-role command! 
@@ -91,15 +93,15 @@ npm start
 
 ## APIs
 
-- [imgur](https://api.imgur.com/)
-- [giphy](https://developers.giphy.com/docs/api/)
-- [reddit](https://www.reddit.com/dev/api/)
-- [steam](https://developer.valvesoftware.com/wiki/Steam_Web_API)
+- [Imgur](https://api.imgur.com/)
+- [Giphy](https://developers.giphy.com/docs/api/)
+- [Reddit](https://www.reddit.com/dev/api/)
+- [Steam](https://developer.valvesoftware.com/wiki/Steam_Web_API)
+- [Urban Dictionary](https://www.urbandictionary.com/)
 
 ## Dependencies
 
 - discordjs
-
 
 ## Built with
 
