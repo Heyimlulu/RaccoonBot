@@ -1,4 +1,4 @@
-# RacoonBot-Dev <img height="25px" src="https://emoji.gg/assets/emoji/6817_Discord_Verified.png">
+# RacoonBot-Dev <img height="20rem" src="https://emoji.gg/assets/emoji/6817_Discord_Verified.png">
 
 Multifunctional discord bot made in Javascript [DEV REPOSITORY]
 
