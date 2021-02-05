@@ -36,6 +36,7 @@ You need to do the following
   - reddit 
   - steam
   - RapidAPI for Urban Dictionary
+- A PostGreSQL database for the logging feature
 
 ### Installing
 
@@ -56,9 +57,15 @@ First enter your bot token. You can find it in your applications tab on [Discord
 }
 ```
 
+You can also put your bot token in the `.env` file
+
+```
+BOT_TOKEN = **************************
+```
+
 > .env-example 
 
-- Rename ``.env-example`` to ``.env``
+- First rename ``.env-example`` to ``.env``
 - Replace ``*`` with your own API Secret Key
 
 ```
@@ -66,8 +73,12 @@ GIPHY_SECRET_KEY = **************************
 IMGUR_SECRET_KEY = **************************
 STEAM_SECRET_KEY = **************************
 URBAN_DICTIONARY_SECRET_KEY = **************************
+```
+
+If you want to use the logging feature, you'll need to get your PostGreSQL URL 
+
+```
 DATABASE_URL = **************************
-BOT_TOKEN = **************************
 ```
 
 Now you can run the bot with
