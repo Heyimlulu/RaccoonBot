@@ -23,8 +23,8 @@ Multifunctional discord bot made in Javascript [DEV REPOSITORY]
   - [Prerequisites](#prerequisites)
   - [Installing](#installing)
   - [Running](#running)
-    - [config.json](#config.json)
-    - [.env-example](#.env-example)
+    - config.json
+    - .env-example
 - Using my bot
   - [top.gg](https://top.gg/bot/734426328002068481)
   - [discordbotlist.com](https://discordbotlist.com/bots/racoonbot)
@@ -36,6 +36,7 @@ Multifunctional discord bot made in Javascript [DEV REPOSITORY]
 - Hosted on
   - Heroku 
 - [Author](#author)
+- [License](#license)
 
 ## Getting started
 
@@ -148,3 +149,7 @@ npm start
 ## Author
 
 - Heyimlulu
+
+## License
+
+Licensed under the [GNU Affero General Public License v3.0 License.](https://github.com/Heyimlulu/RacoonBot-Dev/blob/main/LICENSE) Click for more information.
