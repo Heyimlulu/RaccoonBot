@@ -82,6 +82,13 @@ module.exports = {
 
             return message.channel.send(helpCommandEmbed);
         }
+        if (message.content.startsWith(`${config.prefix}help urban`)){
+            helpCommandEmbed.setTitle(help.fun.urban.name)
+                .setDescription(help.fun.urban.description)
+                .addField('Example', help.fun.urban.example, true)
+
+            return message.channel.send(helpCommandEmbed);
+        }
 
         // General commands
         if (message.content.startsWith(`${config.prefix}help 8ball`)){
@@ -99,6 +106,13 @@ module.exports = {
         if (message.content.startsWith(`${config.prefix}help bing`)){
             helpCommandEmbed.setTitle(help.general.bing.name)
                 .setDescription(help.general.bing.description)
+
+            return message.channel.send(helpCommandEmbed);
+        }
+        if (message.content.startsWith(`${config.prefix}help block`)){
+            helpCommandEmbed.setTitle(help.general.block.name)
+                .setDescription(help.general.block.description)
+                .addField('Example', help.general.block.example, true)
 
             return message.channel.send(helpCommandEmbed);
         }
@@ -124,6 +138,13 @@ module.exports = {
             helpCommandEmbed.setTitle(help.general.sayd.name)
                 .setDescription(help.general.sayd.description)
                 .addField('Example', help.general.sayd.example, true)
+
+            return message.channel.send(helpCommandEmbed);
+        }
+        if (message.content.startsWith(`${config.prefix}help spoiler`)){
+            helpCommandEmbed.setTitle(help.general.spoiler.name)
+                .setDescription(help.general.spoiler.description)
+                .addField('Example', help.general.spoiler.example, true)
 
             return message.channel.send(helpCommandEmbed);
         }
@@ -199,8 +220,8 @@ module.exports = {
             .setTitle('Help commands list')
             .setDescription('Use **racoon help command** for commands detail and example, E.g. racoon help role')
             .addField('⚡\u2000Admin commands', `\u0060${help.admin.ban.name}\u0060 \u0060${help.admin.unban.name}\u0060 \u0060${help.admin.kick.name}\u0060`, false) // Admin commands
-            .addField('🎉\u2000Fun commands', `\u0060${help.fun.cute.name}\u0060 \u0060${help.fun.giphy.name}\u0060 \u0060${help.fun.imgur.name}\u0060 \u0060${help.fun.love.name}\u0060 \u0060${help.fun.reddit.name}\u0060 \u0060${help.fun.steam.name}\u0060`, false) // Fun commands
-            .addField('📝\u2000General commands', `\u0060${help.general["8ball"].name} \u0060 \u0060${help.general.advice.name}\u0060 \u0060${help.general.bing.name}\u0060 \u0060${help.general.fact.name}\u0060 \u0060${help.general.flip.name}\u0060 \u0060${help.general.roll.name}\u0060  \u0060${help.general.sayd.name}\u0060`, false) // General commands
+            .addField('🎉\u2000Fun commands', `\u0060${help.fun.cute.name}\u0060 \u0060${help.fun.giphy.name}\u0060 \u0060${help.fun.imgur.name}\u0060 \u0060${help.fun.love.name}\u0060 \u0060${help.fun.reddit.name}\u0060 \u0060${help.fun.steam.name}\u0060 \u0060${help.fun.urban.name}\u0060`, false) // Fun commands
+            .addField('📝\u2000General commands', `\u0060${help.general["8ball"].name} \u0060 \u0060${help.general.advice.name}\u0060 \u0060${help.general.bing.name}\u0060 \u0060${help.general.block.name}\u0060 \u0060${help.general.fact.name}\u0060 \u0060${help.general.flip.name}\u0060 \u0060${help.general.roll.name}\u0060  \u0060${help.general.sayd.name}\u0060 \u0060${help.general.spoiler.name}\u0060`, false) // General commands
             .addField('🔩\u2000Utility commands', `\u0060${help.utility.download.name}\u0060 \u0060${help.utility.feedback.name}\u0060 \u0060${help.utility.info.name}\u0060 \u0060${help.utility.invite.name}\u0060  \u0060${help.utility.ping.name}\u0060 \u0060${help.utility.role.name}\u0060 \u0060${help.utility.serverinfo.name}\u0060 \u0060${help.utility.stats.name}\u0060 \u0060${help.utility.upvote.name}\u0060 \u0060${help.utility.userinfo.name}\u0060`, false) // Utility commands
 
         //message.author.send(helpEmbed); // Send a dm to the user

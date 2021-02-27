@@ -1,4 +1,4 @@
-# RacoonBot-Dev
+# RacoonBot-Dev <img height="20rem" src="https://emoji.gg/assets/emoji/6817_Discord_Verified.png">
 
 Multifunctional discord bot made in Javascript [DEV REPOSITORY]
 
@@ -16,6 +16,26 @@ Multifunctional discord bot made in Javascript [DEV REPOSITORY]
 ## Status
 
 [![Discord Bots](https://top.gg/api/widget/status/734426328002068481.svg?noavatar=true)](https://top.gg/bot/734426328002068481)
+
+## Table of Contents
+
+- [Getting started](getting%20started)
+  - [Prerequisites](#prerequisites)
+  - [Installing](#installing)
+  - [Running](#running)
+    - [config.json](#config.json)
+    - [.env-example](#.env-example)
+- Using my bot
+  - [top.gg](https://top.gg/bot/734426328002068481)
+  - [discordbotlist.com](https://discordbotlist.com/bots/racoonbot)
+- [Features](#features)
+- [APIs](#apis)
+- [Dependencies](#dependencies)
+- Built with
+  - Jetbrains IntelliJ IDEA
+- Hosted on
+  - Heroku 
+- [Author](#author)
 
 ## Getting started
 
@@ -35,6 +55,8 @@ You need to do the following
   - giphy
   - reddit 
   - steam
+  - RapidAPI for Urban Dictionary
+- A PostGreSQL database for the logging feature
 
 ### Installing
 
@@ -44,7 +66,7 @@ npm install
 
 ### Running
 
-> config.json 
+#### config.json 
 
 First enter your bot token. You can find it in your applications tab on [Discord Developer Portal](https://discord.com/developers/applications)
 
@@ -55,15 +77,28 @@ First enter your bot token. You can find it in your applications tab on [Discord
 }
 ```
 
-> .env-example 
+You can also put your bot token in the `.env` file
 
-- Rename ``.env-example`` to ``.env``
+```
+BOT_TOKEN = **************************
+```
+
+#### .env-example 
+
+- First rename ``.env-example`` to ``.env``
 - Replace ``*`` with your own API Secret Key
 
 ```
 GIPHY_SECRET_KEY = **************************
 IMGUR_SECRET_KEY = **************************
 STEAM_SECRET_KEY = **************************
+URBAN_DICTIONARY_SECRET_KEY = **************************
+```
+
+If you want to use the logging feature, you'll need to get your PostGreSQL URL 
+
+```
+DATABASE_URL = **************************
 ```
 
 Now you can run the bot with
@@ -82,24 +117,24 @@ npm start
 - Get a random image from [imgur](https://giphy.com/) and  [giphy.](https://imgur.com/)
 - Get a random [subreddit.](https://www.reddit.com/)
 - Get player stats from [steam.](https://store.steampowered.com/)
+- Get an article from [Urban Dictionary](https://www.urbandictionary.com/)
 - Measure your cuteness with the Cute o'meter
 - Show for how much you love someone with the *love* command
 - Auto-role command! 
 - Download videos from youtube
 - Kick/Ban commands.
-- Open Source!
 
 ## APIs
 
-- [imgur](https://api.imgur.com/)
-- [giphy](https://developers.giphy.com/docs/api/)
-- [reddit](https://www.reddit.com/dev/api/)
-- [steam](https://developer.valvesoftware.com/wiki/Steam_Web_API)
+- [Imgur](https://api.imgur.com/)
+- [Giphy](https://developers.giphy.com/docs/api/)
+- [Reddit](https://www.reddit.com/dev/api/)
+- [Steam](https://developer.valvesoftware.com/wiki/Steam_Web_API)
+- [Urban Dictionary](https://www.urbandictionary.com/)
 
 ## Dependencies
 
 - discordjs
-
 
 ## Built with
 

@@ -50,6 +50,11 @@
       "name": "steam",
       "description": "Display some stats for a steam user",
       "example": "racoon steam userSteamid"
+    },
+    "urban": {
+      "name": "urban",
+      "description": "Fetch an article from urban dictionary",
+      "example": "racoon urban <article>"
     }
   },
   "general": {
@@ -64,6 +69,11 @@
     "bing": {
       "name": "bing",
       "description": "Get the wallpaper of the day from Bing"
+    },
+    "block": {
+      "name": "block",
+      "description": "Send a message in a block",
+      "example": "racoon block <text>"
     },
     "fact": {
       "name": "fact",
@@ -81,6 +91,11 @@
       "name": "sayd",
       "description": "Write something you want the bot to repeat",
       "example": "racoon sayd Hello world!"
+    },
+    "spoiler": {
+      "name": "spoiler",
+      "description": "Send a message using the spoiler tag",
+      "example": "racoon spoiler <text>"
     }
   },
   "utility": {
