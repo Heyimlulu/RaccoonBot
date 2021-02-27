@@ -17,6 +17,26 @@ Multifunctional discord bot made in Javascript [DEV REPOSITORY]
 
 [![Discord Bots](https://top.gg/api/widget/status/734426328002068481.svg?noavatar=true)](https://top.gg/bot/734426328002068481)
 
+## Table of Contents
+
+- [Getting started](getting%20started)
+  - [Prerequisites](#prerequisites)
+  - [Installing](#installing)
+  - [Running](#running)
+    - [config.json](#config.json)
+    - [.env-example](#.env-example)
+- Using my bot
+  - [top.gg](https://top.gg/bot/734426328002068481)
+  - [discordbotlist.com](https://discordbotlist.com/bots/racoonbot)
+- [Features](#features)
+- [APIs](#apis)
+- [Dependencies](#dependencies)
+- Built with
+  - Jetbrains IntelliJ IDEA
+- Hosted on
+  - Heroku 
+- [Author](#author)
+
 ## Getting started
 
 ### Prerequisites
@@ -46,7 +66,7 @@ npm install
 
 ### Running
 
-> config.json 
+#### config.json 
 
 First enter your bot token. You can find it in your applications tab on [Discord Developer Portal](https://discord.com/developers/applications)
 
@@ -63,7 +83,7 @@ You can also put your bot token in the `.env` file
 BOT_TOKEN = **************************
 ```
 
-> .env-example 
+#### .env-example 
 
 - First rename ``.env-example`` to ``.env``
 - Replace ``*`` with your own API Secret Key
@@ -103,7 +123,6 @@ npm start
 - Auto-role command! 
 - Download videos from youtube
 - Kick/Ban commands.
-- Open Source!
 
 ## APIs
 
