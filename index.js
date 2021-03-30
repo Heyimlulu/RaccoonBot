@@ -141,9 +141,13 @@ client.on('message', message => {
 
     if (!client.commands.has(command)) return;
 
-    var query = `INSERT INTO logs(command) VALUES('${message.content}')`
+    var query = `INSERT INTO logs(command, author, author_id) VALUES('${message.content}', '${message.author.tag}', '${message.author.id}')`;
 
     //console.log(query);
+    /*
+    console.log("Message from " + message.author.tag);
+    console.log("Author ID = " + message.author.id);
+     */
 
     pgClient.query(
         query,
