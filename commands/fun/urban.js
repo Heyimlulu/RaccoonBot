@@ -32,22 +32,28 @@ module.exports = {
                 .setColor("RANDOM")
                 .setTitle('Please wait...');
 
-            message.channel.send(loading).then((msg) => {
-                setTimeout(() => {
-                    const embed = new Discord.MessageEmbed()
-                        .setColor("RANDOM")
-                        .setAuthor('Urban dictionary')
-                        .setThumbnail('https://s3.amazonaws.com/mashape-production-logos/apis/53aa4f67e4b0a9b1348da532_medium')
-                        .setTitle(response.list[i].word)
-                        .setURL(response.list[i].permalink)
-                        .addField('Definition', response.list[i].definition, false)
-                        .addField('Example', response.list[i].example, false)
-                        .setFooter(`✍️${response.list[i].author} | 👍${response.list[i].thumbs_up} | 👎${response.list[i].thumbs_down}`)
-                        .setTimestamp()
+            if (!response.list[i]){
+                message.channel.send("Sorry, I couldn't find that word")
+            } else {
 
-                    msg.edit(embed); // Send new message
-                }, 2000); // Wait 2 seconds before editing message
-            })
+                message.channel.send(loading).then((msg) => {
+                    setTimeout(() => {
+
+                        const embed = new Discord.MessageEmbed()
+                            .setColor("RANDOM")
+                            .setAuthor('Urban dictionary')
+                            .setThumbnail('https://s3.amazonaws.com/mashape-production-logos/apis/53aa4f67e4b0a9b1348da532_medium')
+                            .setTitle(response.list[i].word)
+                            .setURL(response.list[i].permalink)
+                            .addField('Definition', response.list[i].definition, false)
+                            .addField('Example', response.list[i].example, false)
+                            .setFooter(`✍️${response.list[i].author} | 👍${response.list[i].thumbs_up} | 👎${response.list[i].thumbs_down}`)
+                            .setTimestamp()
+
+                        msg.edit(embed); // Send new message
+                    }, 2000); // Wait 2 seconds before editing message
+                })
+            }
         });
     },
 };
