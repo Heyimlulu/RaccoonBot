@@ -1,21 +1,37 @@
+const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 
-module.exports = {
-    name: 'flip',
-    description: 'Flips a coin.',
-    execute(message) {
+class FlipCommand extends Command {
+    constructor() {
+        super('flip', {
+            aliases: ['flip', 'coin'],
+            category: 'general',
+            clientPermissions: ["SEND_MESSAGES"],
+            description: {
+                content: 'Flip a coin',
+                usage: '',
+                examples: ['']
+            }
+        });
+    }
 
-        var coin = [
+    exec(message, args) {
+
+        let coin = [
             'Tails',
-            'Heads'];
+            'Heads'
+        ];
 
         let coinFlip = coin[Math.floor(Math.random() * (coin.length))];
 
         const flipEmbed = new Discord.MessageEmbed()
-            .setColor("RANDOM")
+            .setColor(message.member ? message.member.displayHexColor : 'RANDOM')
             .setTitle('🪙\u2000Coin flip')
             .setDescription(`It's **${coinFlip}**`)
 
         message.channel.send(flipEmbed);
-    },
-};
+
+    }
+}
+
+module.exports = FlipCommand;

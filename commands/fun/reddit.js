@@ -1,50 +1,58 @@
+const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const fetch = require('node-fetch');
-const config = require("../../json/config.json");
 
-module.exports = {
-    name: 'reddit',
-    description: 'Send random images from the subreddit you choose!',
-    category: 'fun',
-    execute(message) {
+class RedditCommand extends Command {
+    constructor() {
+        super('reddit', {
+            aliases: ['reddit'],
+            category: 'fun',
+            args: [
+                {
+                    id: 'subreddit',
+                    type: 'string',
+                    prompt: {
+                        start: 'Which user do you want me to verify cuteness?'
+                    }
+                }
+            ],
+            description: {
+                content: 'Send random images from the subreddit you choose',
+                usage: '[ProgrammerHumor]',
+                examples: ['ProgrammerHumor']
+            }
+        });
+    }
 
-        let redditSearch = message.content.split(`${config.prefix}reddit`).join('').trim()
-        
-        if (redditSearch == '') {
-            message.channel.send("No subreddit specified");
-        } else {
-            fetch('https://www.reddit.com/r/' + redditSearch + '.json?limit=100').then((response) => {
-                return response.json();
-            }).then((response) => {
-                if (response.error == 404)
-                    return message.channel.send('Not a valid subreddit');
+    exec(message, args) {
 
-                if (response.data.dist == 0)
-                    return message.channel.send('Not a valid subreddit');
+        let search = args.subreddit;
 
-                let i = Math.floor((Math.random() * response.data.children.length));
+        fetch('https://www.reddit.com/r/' + search + '.json?limit=100').then((response) => {
+            return response.json();
+        }).then((response) => {
 
-                if (response.data.children[i].data.over_18 == true && !message.channel.nsfw)
-                    return message.channel.send('No nsfw');
+            if (response.error == 404) return message.channel.send('Not a valid subreddit');
 
-                const loadingEmbed = new Discord.MessageEmbed()
-                    .setColor("RANDOM")
-                    .setTitle('Please wait...');
+            if (response.data.dist == 0) return message.channel.send('Not a valid subreddit');
 
-                message.channel.send(loadingEmbed).then((msg) => {
-                    setTimeout(() => {
-                        const redditEmbed = new Discord.MessageEmbed()
-                        redditEmbed.setColor("RANDOM")
-                            .setTitle(response.data.children[i].data.title)
-                            .setDescription(response.data.children[i].data.selftext)
-                            .setURL('https://reddit.com' + response.data.children[i].data.permalink)
-                            .setImage(response.data.children[i].data.url_overridden_by_dest)
-                            .setFooter(`/r/${response.data.children[i].data.subreddit} | ⬆ ${response.data.children[i].data.ups} 🗨 ${response.data.children[i].data.num_comments}`);
+            let i = Math.floor((Math.random() * response.data.children.length));
 
-                        msg.edit(redditEmbed); // Send new message
-                    }, 2000); // Wait 2 seconds before editing message
-                })
-            });
-        }
-    },
-};
+            if (response.data.children[i].data.over_18 == true && !message.channel.nsfw) return message.channel.send('No nsfw');
+
+            const embed = new Discord.MessageEmbed()
+                .setColor(message.member ? message.member.displayHexColor : 'RANDOM')
+                .setTitle(response.data.children[i].data.title)
+                .setDescription(response.data.children[i].data.selftext)
+                .setURL('https://reddit.com' + response.data.children[i].data.permalink)
+                .setImage(response.data.children[i].data.url_overridden_by_dest)
+                .setFooter(`/r/${response.data.children[i].data.subreddit} | ⬆ ${response.data.children[i].data.ups} 🗨 ${response.data.children[i].data.num_comments}`);
+
+            message.channel.send(embed);
+
+        });
+
+    }
+}
+
+module.exports = RedditCommand;

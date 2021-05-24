@@ -1,21 +1,37 @@
-const config = require("../../json/config.json");
+const { Command } = require('discord-akairo');
 
-module.exports = {
-    name: 'spoiler',
-    description: 'Send a message using the spoiler tag',
-    execute(message) {
+class SpoilerCommand extends Command {
+    constructor() {
+        super('spoiler', {
+            aliases: ['spoiler'],
+            category: 'general',
+            clientPermissions: ["SEND_MESSAGES" ,'MANAGE_MESSAGES'],
+            args: [
+                {
+                    id: 'spoil',
+                    type: 'string',
+                    prompt: {
+                        start: 'What do you want me to spoil?'
+                    },
+                    match: 'rest'
+                }
+            ],
+            description: {
+                content: 'Send a message using the spoiler tag',
+                usage: '[Hello World]',
+                examples: ['Hello World']
+            }
+        });
+    }
 
-        let spoiler = message.content.split(`${config.prefix}spoiler`).join("").trim(); // Listen to user's input
+    exec(message, args) {
 
-        if (!spoiler) {
-            return message.channel.send('What do you want me to say ?');
-        }
+        let spoiler = args.spoil;
 
-        try {
-            message.delete(); // Delete user message
-            message.channel.send('||' + spoiler + '||'); // Send message
-        } catch {
-            message.channel.send("I do not have permissions to delete message");
-        }
-    },
-};
+        message.delete();
+        message.channel.send('||' + spoiler + '||');
+
+    }
+}
+
+module.exports = SpoilerCommand;

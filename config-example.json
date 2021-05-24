@@ -1,0 +1,44 @@
+{
+  "owner": "",
+  "prefix": ["nya"],
+  "statsChannel": "",
+  "topgg" : {
+    "name": "top.gg",
+    "url": "https://top.gg/api/bots/<BOT_ID>/stats",
+    "authorization": "<TOKEN>",
+    "body": "{\"server_count\":{{SERVER_COUNT}}}"
+  },
+  "discordbotlist": {
+    "name": "discordbotlist.com",
+    "url": "https://discordbotlist.com/api/v1/bots/<BOT_ID>/stats",
+    "authorization": "<TOKEN>",
+    "body": "{\"guilds\": 0, \"users\": 0}"
+  },
+  "discordbotsgg": {
+    "name": "discord.bots.gg",
+    "url": "https://discord.bots.gg/api/v1/bots/<BOT_ID>/stats",
+    "authorization": "<TOKEN>",
+    "body": "{\"guildCount\":{{SERVER_COUNT}}}"
+  },
+  "donation": {
+    "url": ""
+  },
+  "danbooru": {
+    "login": ""
+  },
+  "development": {
+    "database": "",
+    "username": "",
+    "password": "",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "database": "",
+    "username": "",
+    "password": "",
+    "host": "",
+    "dialect": "postgres",
+    "logging": false
+  }
+}
