@@ -1,192 +1,266 @@
-const Discord = require('discord.js');
+const { Command } = require('discord-akairo');
+const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
-const config = require("../../json/config.json");
-
 const dotenv = require('dotenv');
 dotenv.config();
 
-module.exports = {
-    name: 'steam',
-    description: 'Send stats for a steam user',
-    category: 'fun',
-    execute(message) {
+class SteamCommand extends Command {
+    constructor() {
+        super('steam', {
+            aliases: ['steam'],
+            category: 'fun',
+            clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS'],
+            args: [
+                {
+                    id: 'user',
+                    type: 'string',
+                    prompt: {
+                        start: 'Which steam user should I show infos?'
+                    }
+                }
+            ],
+            description: {
+                content: 'Send stats for a steam user',
+                usage: '[steamID]',
+                examples: ['']
+            }
+        });
+    }
 
-        let steamKey = process.env.STEAM_SECRET_KEY;
-        let steamSearch = message.content.split(`${config.prefix}steam`).join("")
+    async exec(message, args) {
 
-        if (steamSearch == '') {
-            message.reply("Invalid steamID!");
-        } else {
-            // Get player summaries
-            fetch(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${steamKey}&steamids=${steamSearch}`)
-                .then((response) => {
-                    return response.json(); // <-- return a json response
-                }).then((response) => {
+        let steamID = args.user;
+        if (!steamID) return message.reply('You did not specified a valid steamID!')
 
-                // Decode player country, state and city
-                fetch('https://raw.githubusercontent.com/Holek/steam-friends-countries/master/data/steam_countries.json')
-                    .then((response) => {
-                        return response.json(); // <-- return a json response
-                    }).then((responseCheck) => {
+        let doesExist = await checkSteamID();
+        if (doesExist === true) return message.reply('I could not find a steam user with that ID!');
 
-                    // Get friend list
-                    fetch(`http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=${steamKey}&steamid=${steamSearch}&relationship=friend`)
-                        .then((response) => {
-                            return response.json(); // <-- return a json file
-                        }).then((responseFriend) => {
+        let player = await getPlayerSummaries();
+        let decoder = await decodeCountries(player.country, player.state, player.city);
+        let friendsList = await getFriends();
+        let games = await getGames();
+        let VAC = await getPlayerBan();
+        let recentGame = await getRecentlyPlayedGame();
 
-                        // Get owned games
-                        fetch(`http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${steamKey}&steamid=${steamSearch}&format=json`)
-                            .then((response) => {
-                                return response.json(); // <-- return a json file
-                            }).then((responseGame) => {
+        const embed = new MessageEmbed()
+            .setColor(message.member ? message.member.displayHexColor : 'RANDOM')
+            .setTitle(`${player.userName} (${steamID})`)
+            .setDescription(`Realname : \u0060${player.realName}\u0060`)
+            .setURL(player.url)
+            .setThumbnail(player.avatar)
+            .addField('Profile visibility', player.stateProfile, false)
+            .addField('Country', decoder.country, true)
+            .addField('State', decoder.state, true)
+            .addField('City', decoder.city, true)
+            .addField('Friends count', friendsList, true)
+            .addField('Games count', games, true)
+            .addField('VAC banned?', VAC, true)
+            .addField('Recent game', recentGame, false)
+            .addField('Last logoff', player.lastlogoffTime, false)
+            .addField('Created at', player.dateCreatedAt, false)
 
-                            // Get player bans
-                            fetch(`http://api.steampowered.com/ISteamUser/GetPlayerBans/v1/?key=${steamKey}&steamids=${steamSearch}`)
-                                .then((response) => {
-                                    return response.json(); // <-- return a json file
-                                }).then((responseVAC) => {
+        await message.channel.send(embed);
 
-                                // Get recently played game
-                                fetch(`http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=${steamKey}&steamid=${steamSearch}&format=json`)
-                                    .then((response) => {
-                                        return response.json(); // <-- return a json file
-                                    }).then((responseRecentGame) => {
+        async function checkSteamID() {
+            const response = await fetch(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_SECRET_KEY}&steamids=${steamID}`);
+            const checkSteamID = await response.json();
 
-                                    // Get the recent game for the user
-                                    if (responseRecentGame.response.hasOwnProperty('games')){
-                                        var recentGame = responseRecentGame.response.games[0].name;
-                                    } else {
-                                        var recentGame = 'unknown';
-                                    }
+            if (!checkSteamID.response.players[0]) return true;
+        }
 
-                                    // Check if the player has a vac ban in his profile
-                                    if (responseVAC.players[0].hasOwnProperty('VACBanned')) {
-                                        var vacCheck = responseVAC.players[0].VACBanned;
+        async function getPlayerSummaries() {
+            let avatar,
+                userName,
+                url,
+                realName,
+                stateProfile,
+                country,
+                state,
+                city,
+                lastlogoffTime,
+                dateCreatedAt;
 
-                                        if (vacCheck === true) {
-                                            var vacBanned = 'Yes';
-                                        } else {
-                                            var vacBanned = 'No';
-                                        }
-                                    } else {
-                                        var varCheck = 'unknown';
-                                    }
+            const response = await fetch(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_SECRET_KEY}&steamids=${steamID}`);
+            const playerSummaries = await response.json();
 
-                                    if (response.response.players[0].hasOwnProperty('realname')) {
-                                        var realName = response.response.players[0].realname;
-                                    } else {
-                                        var realName = 'unknown';
-                                    }
+            avatar = playerSummaries.response.players[0].avatarfull; // Get player's avatar
+            userName = playerSummaries.response.players[0].personaname; // Get player's username
+            url = playerSummaries.response.players[0].profileurl; // Get link to player's steam profile
 
-                                    // Count how many games the player have
-                                    if (responseGame.response.hasOwnProperty('game_count')) {
-                                        var gameCount = responseGame.response.game_count;
-                                    } else {
-                                        var gameCount = 'unknown';
-                                    }
+            // Get player's realname if any
+            if (playerSummaries.response.players[0].hasOwnProperty('realname')) {
+                realName = playerSummaries.response.players[0].realname;
+            } else {
+                realName = 'unknown';
+            }
 
-                                    // Count how many friends the player have
-                                    if (responseFriend.hasOwnProperty('friendslist')) {
-                                        // Friends counter
-                                        function length(obj) {
-                                            return Object.keys(obj).length;
-                                        }
+            // Check if the profile is public or private
+            if (playerSummaries.response.players[0].communityvisibilitystate == 1) {
+                stateProfile = 'Private';
+            }
+            if (playerSummaries.response.players[0].communityvisibilitystate == 3) {
+                stateProfile = 'Public';
+            }
 
-                                        // Store the result in a variable
-                                        var friendsCount = length(responseFriend.friendslist.friends);
-                                    } else {
-                                        var friendsCount = 'unknown';
-                                    }
+            // Get steam user location if any
+            if (playerSummaries.response.players[0].hasOwnProperty('loccountrycode')) {
+                country = playerSummaries.response.players[0].loccountrycode;
+            } else {
+                country = 'Unknown';
+            }
 
-                                    // store output from the steam api in a variable
-                                    //console.log(response.response.players[0].hasOwnProperty('loccountrycode'));
-                                    if (response.response.players[0].hasOwnProperty('loccountrycode')) {
-                                        var countryDecode = response.response.players[0].loccountrycode;
-                                        var country = responseCheck[countryDecode].name;
-                                    } else {
-                                        var country = 'Unknown';
-                                    }
+            if (playerSummaries.response.players[0].hasOwnProperty('locstatecode')) {
+                state = playerSummaries.response.players[0].locstatecode;
+            } else {
+                state = 'Unknown';
+            }
 
-                                    //console.log(response.response.players[0].hasOwnProperty('locstatecode'));
-                                    if (response.response.players[0].hasOwnProperty('locstatecode')) {
-                                        var stateDecode = response.response.players[0].locstatecode;
-                                        var state = responseCheck[countryDecode].states[stateDecode].name;
-                                    } else {
-                                        var state = 'Unknown';
-                                    }
+            if (playerSummaries.response.players[0].hasOwnProperty('loccityid')) {
+                city = playerSummaries.response.players[0].loccityid;
+            } else {
+                city = 'Unknown';
+            }
 
-                                    //console.log(response.response.players[0].hasOwnProperty('loccityid'));
-                                    if (response.response.players[0].hasOwnProperty('loccityid')) {
-                                        var cityDecode = response.response.players[0].loccityid;
-                                        var city = responseCheck[countryDecode].states[stateDecode].cities[cityDecode].name;
-                                    } else {
-                                        var city = 'Unknown';
-                                    }
+            // Display the last time the user was seen online and set it in a variable that will convert into a readable format for human
+            let unix_timestamp = playerSummaries.response.players[0].lastlogoff;
 
-                                    // Get the exact country, state and city with the variables
-                                    /*
-                                    console.log(responseCheck[country].name);
-                                    console.log(responseCheck[country].states[state].name);
-                                    console.log(responseCheck[country].states[state].cities[city].name);
-                                     */
+            // Create a new JavaScript Date object based on the timestamp
+            let dateLogoff = new Date(unix_timestamp * 1000); // multiplied by 1000 so that the argument is in milliseconds and not seconds
+            let hh = dateLogoff.getHours() + 1; // Hours
+            let mm = "0" + dateLogoff.getMinutes(); // Minutes
+            let ss = "0" + dateLogoff.getSeconds(); // Seconds
+            lastlogoffTime = hh + ':' + mm.substr(-2) + ':' + ss.substr(-2); // Will display time in 00:00:00 format
 
-                                    // Check if the profile is public or private
-                                    if (response.response.players[0].communityvisibilitystate == 1) {
-                                        var stateProfile = 'Private';
-                                    }
-                                    if (response.response.players[0].communityvisibilitystate == 3) {
-                                        var stateProfile = 'Public';
-                                    }
+            // Display the date when the user created his profile and convert it into a correct and readable date format
+            let unixTime = playerSummaries.response.players[0].timecreated;
+            dateCreatedAt = new Date(unixTime * 1000);
 
-                                    // Display the last time the user was seen online and set it in a variable that will convert into a readable format for human
-                                    let unix_timestamp = response.response.players[0].lastlogoff;
+            // return values
+            return {
+                avatar,
+                userName,
+                url,
+                realName,
+                stateProfile,
+                country,
+                state,
+                city,
+                lastlogoffTime,
+                dateCreatedAt
+            };
 
-                                    // Create a new JavaScript Date object based on the timestamp
-                                    var dateLogoff = new Date(unix_timestamp * 1000); // multiplied by 1000 so that the argument is in milliseconds and not seconds
-                                    var hours = dateLogoff.getHours() + 1; // Hours
-                                    var minutes = "0" + dateLogoff.getMinutes(); // Minutes
-                                    var seconds = "0" + dateLogoff.getSeconds(); // Seconds
-                                    var lastlogoffTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2); // Will display time in 00:00:00 format
+        }
 
-                                    // Display the date when the user created his profile and convert it into a correct and readable date format
-                                    const unixTime = response.response.players[0].timecreated;
-                                    const dateCreatedat = new Date(unixTime * 1000);
+        async function decodeCountries(countries, states, cities) {
 
-                                    const loadingEmbed = new Discord.MessageEmbed()
-                                        .setColor("RANDOM")
-                                        .setTitle('Please wait...');
+            let country,
+                state,
+                city;
 
-                                    message.channel.send(loadingEmbed).then((msg) => {
-                                        setTimeout(() => {
-                                            // Display result in a Message Embed
-                                            const steamEmbed = new Discord.MessageEmbed()
-                                                .setColor("RANDOM")
-                                                .setTitle(response.response.players[0].personaname)
-                                                .setDescription(`Realname : ${realName}`)
-                                                .setURL(response.response.players[0].profileurl)
-                                                .addField('SteamID', response.response.players[0].steamid, false)
-                                                .addField('Profile visibility', stateProfile, false)
-                                                .addField('Country', country, true)
-                                                .addField('State', state, true)
-                                                .addField('City', city, true)
-                                                .addField('Friends count', friendsCount, true)
-                                                .addField('Games count', gameCount, true)
-                                                .addField('VAC banned?', vacBanned, true)
-                                                .addField('Recent game', recentGame, false)
-                                                .addField('Last logoff', lastlogoffTime, false)
-                                                .addField('Created at', dateCreatedat, false)
-                                                .setThumbnail(response.response.players[0].avatarfull)
+            const response = await fetch('https://raw.githubusercontent.com/Holek/steam-friends-countries/master/data/steam_countries.json');
+            const decoder = await response.json();
 
-                                            msg.edit(steamEmbed); // Edit message
-                                        }, 2000); // Wait 2 seconds before editing message
-                                    })
-                                })
-                            })
-                        })
-                    })
-                })
-            })
+            if (countries) {
+                country = decoder[countries].name;
+            } else {
+                country = 'Unknown';
+            }
+
+            if (states) {
+                state = decoder[countries].states[states].name;
+            } else {
+                state = 'Unknown';
+            }
+
+            if (cities) {
+                city = decoder[countries].states[states].cities[cities].name;
+            } else {
+                city = 'Unknown';
+            }
+
+            return {
+                country,
+                state,
+                city
+            };
+        }
+
+        async function getFriends() {
+
+            let friendsCount;
+
+            const response = await fetch(`http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=${process.env.STEAM_SECRET_KEY}&steamid=${steamID}&relationship=friend`);
+            const friends = await response.json();
+
+            // Count how many friends the player have
+            if (friends.hasOwnProperty('friendslist')) {
+                // Friends counter
+                function length(obj) {
+                    return Object.keys(obj).length;
+                }
+
+                // Store the result in a variable
+                friendsCount = length(friends.friendslist.friends);
+            } else {
+                friendsCount = 'unknown';
+            }
+
+            return friendsCount;
+        }
+
+        async function getGames() {
+
+            let gameCount;
+
+            const response = await fetch(`http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.STEAM_SECRET_KEY}&steamid=${steamID}&format=json`);
+            const games = await response.json();
+
+            // Count how many games the player have
+            if (games.response.hasOwnProperty('game_count')) {
+                gameCount = games.response.game_count;
+            } else {
+                gameCount = 'unknown';
+            }
+
+            return gameCount;
+        }
+
+        async function getPlayerBan() {
+
+            let vacBanned;
+
+            const response = await fetch(`http://api.steampowered.com/ISteamUser/GetPlayerBans/v1/?key=${process.env.STEAM_SECRET_KEY}&steamids=${steamID}`);
+            const VAC = await response.json();
+
+            if (VAC.players[0].hasOwnProperty('VACBanned')) {
+                let vacCheck = VAC.players[0].VACBanned;
+
+                if (vacCheck === true) {
+                    vacBanned = 'Yes';
+                } else {
+                    vacBanned = 'No';
+                }
+            }
+
+            return vacBanned;
+        }
+
+        async function getRecentlyPlayedGame() {
+
+            let recentGame;
+
+            const response = await fetch(`http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=${process.env.STEAM_SECRET_KEY}&steamid=${steamID}&format=json`);
+            const recentlyPlayedGame = await response.json();
+
+            if (recentlyPlayedGame.response.hasOwnProperty('games')){
+                recentGame = recentlyPlayedGame.response.games[0].name;
+            } else {
+                recentGame = 'unknown';
+            }
+
+            return recentGame;
         }
     }
 }
+
+module.exports = SteamCommand;

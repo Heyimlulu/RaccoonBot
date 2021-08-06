@@ -1,21 +1,37 @@
-const config = require('../../json/config.json');
+const { Command } = require('discord-akairo');
 
-module.exports = {
-    name: 'sayd',
-    description: 'Write something you want the bot to repeat',
-    execute(message) {
+class SaydCommand extends Command {
+    constructor() {
+        super('sayd', {
+            aliases: ['sayd'],
+            category: 'general',
+            clientPermissions: ["SEND_MESSAGES" ,'MANAGE_MESSAGES'],
+            args: [
+                {
+                    id: 'sentence',
+                    type: 'string',
+                    prompt: {
+                        start: 'What do you want me to say?'
+                    },
+                    match: 'rest'
+                }
+            ],
+            description: {
+                content: 'Write something you want the bot to repeat',
+                usage: '[text]',
+                examples: ['Hello ;)']
+            }
+        });
+    }
 
-        let sayd = message.content.split(`${config.prefix}sayd`).join("").trim(); // Listen to user's input
+    exec(message, args) {
 
-        if (!sayd) {
-            return message.channel.send('What do you want me to say ?');
-        }
+        let sayd = args.sentence;
 
-        try {
-            message.delete(); // Delete user message
-            message.channel.send(sayd); // Send message
-        } catch {
-            message.channel.send("I do not have permissions to delete message");
-        }
-    },
-};
+        message.delete();
+        message.channel.send(sayd);
+
+    }
+}
+
+module.exports = SaydCommand;

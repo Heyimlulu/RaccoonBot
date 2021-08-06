@@ -1,27 +1,36 @@
+const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 
-module.exports = {
-    name: 'ping',
-    description: 'Ping the bot!',
-    category: 'utility',
-    execute(message) {
+class PingCommand extends Command {
+    constructor() {
+        super('ping', {
+            aliases: ['ping'],
+            category: 'utility',
+            description: {
+                content: 'Ping the bot',
+                usage: '',
+                example: ['']
+            }
+        });
+    }
 
-        var ping = Date.now() - message.createdTimestamp + " ms";
+    async exec(message) {
 
-        const pingingEmbed = new Discord.MessageEmbed()
-            .setColor("RANDOM")
-            .setTitle('Pinging...');
+        const loadingEmbed = new Discord.MessageEmbed().setTitle('Pinging...');
 
-        message.channel.send(pingingEmbed).then((msg) => {
-            setTimeout(() => {
-                const pongEmbed = new Discord.MessageEmbed()
-                    .setColor('RANDOM')
-                    .setTitle('Pong 🏓')
-                    .setDescription("Your ping is " + `${ping}`)
-                    .setTimestamp()
+        await message.reply(loadingEmbed).then(sent => {
+            
+            const timeDiff = (sent.editedAt || sent.createdAt) - (message.editedAt || message.createdAt);
+            const embed = new Discord.MessageEmbed()
+                .setColor(message.member ? message.member.displayHexColor : 'RANDOM')
+                .setTitle('Pong 🏓')
+                .setDescription(`🔂\u2000**RTT**: ${timeDiff} ms\n💟\u2000**Heartbeat**: ${Math.round(this.client.ws.ping)} ms`)
+                .setTimestamp()
 
-                msg.edit(pongEmbed); // Edit message
-            }, 1000); // Wait 1 seconds before editing message
+            return sent.edit(embed);
+
         })
     }
-};
+}
+
+module.exports = PingCommand;

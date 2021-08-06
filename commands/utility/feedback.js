@@ -1,44 +1,71 @@
+const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
-const config = require("../../json/config.json");
+const feedbackID = require('../../json/feedbackID.json');
 
-module.exports = (client) => {
-    client.on('message', message => {
-
-        if (!message.content.startsWith(`${config.prefix}feedback`) || message.author.bot) return;
-
-        try {
-            let dm = message.content.split(`${config.prefix}feedback`).join("").trim();
-
-            if (!dm) return message.reply('What do you want to say to the developer?');
-
-            // Don't let new account use this command to prevent spam, if they have an UUID its fine to skip it
-            // Snippet code by Supositware ;)
-            let date = new Date();
-            if (message.author.createdAt > date.setDate(date.getDate() - 7)) {
-                return message.channel.send('Your account is too new to be able to use this command!');
+class FeedbackCommand extends Command {
+    constructor() {
+        super('feedback', {
+            aliases: ['feedback'],
+            category: 'utility',
+            clientPermissions: 'SEND_MESSAGES',
+            args: [
+                {
+                    id: 'text',
+                    type: 'string',
+                    prompt: {
+                        start: 'What do you want to send to the developer?'
+                    },
+                    match: 'rest'
+                },
+                {
+                    id: 'reply',
+                    match: 'option',
+                    flag: '--reply'
+                }
+            ],
+            description: {
+                content: 'Send a feedback to the developer',
+                usage: '[text]',
+                example: ['Hello ;)']
             }
+        });
+    }
 
-            const user = client.users.resolve(`265896171384340480`); // <-- It will sent to my discord ID <-- Yuki 🐺#0001
-            //const user = client.users.cache.get('265896171384340480');
+    exec(message, args) {
 
-            const embedDM = new Discord.MessageEmbed();
-            embedDM.setTitle('You got a new feedback!')
-                .setDescription(`${message.author.id}`)
-                .setAuthor(`${message.author.tag}`, `${message.author.displayAvatarURL()}`)
-                .addField('Server', `${message.guild.name}`, false)
-                .addField('Message', `${dm}`, false)
-                .setTimestamp()
+        const embed = new Discord.MessageEmbed()
+            .setAuthor(`${message.author.tag} (${message.author.id})`, message.author.displayAvatarURL())
+            .setTimestamp();
 
-            user.send(embedDM)
-                .then(() => {
-                    return message.reply("Your feedback has been sent!");
-                })
-                .catch(() => {
-                    return message.channel.send('Could not send feedback, please try again')
-                })
-
-        } catch (e) {
-            console.log(e);
+        if (message.guild) {
+            embed.addField('Guild', `${message.guild.name} (${message.guild.id})`, true);
         }
-    })
+
+        embed.setTitle('You got a new feedback!')
+            .setDescription(args.text);
+
+        if (feedbackID[args.reply]) {
+            embed.addField('Responding to', feedbackID[args.reply]);
+        }
+
+        // Don't let new account use this command to prevent spam, if they have an UUID its fine to skip it
+        let date = new Date();
+        if (message.author.createdAt > date.setDate(date.getDate() - 7)) {
+            return message.channel.send('Your account is too new to be able to use this command!');
+        }
+
+        let Attachment = (message.attachments).array();
+        if (Attachment[0]) embed.setImage(Attachment[0].url);
+
+        this.client.users.resolve('265896171384340480').send(embed)
+            .then(() => {
+                message.channel.send("Your feedback has been sent! Get your dm open if you want an answer from the dev!");
+            })
+            .catch(() => {
+                message.channel.send(`There's was an error sending this feedback, please try again`);
+            });
+
+    }
 }
+
+module.exports = FeedbackCommand;

@@ -1,9 +1,21 @@
+const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const os = require('os');
-const config = require("../../json/config.json");
 
-module.exports = (client) => {
-    client.on('message', message => {
+class StatsCommand extends Command {
+    constructor() {
+        super('stats', {
+            aliases: ['stats'],
+            category: 'utility',
+            description: {
+                content: 'Show some stats about the bot',
+                usage: '',
+                example: ['']
+            }
+        });
+    }
+
+    exec(message) {
 
         var uptime = process.uptime();
         const date = new Date(uptime*1000);
@@ -29,29 +41,22 @@ module.exports = (client) => {
             return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
         };
 
-        if (message.content === `${config.prefix}stats`) {
-            try {
-                const statsEmbed = new Discord.MessageEmbed()
-                    .setColor('RANDOM')
-                    .setTitle('Bot stats')
-                    .setAuthor('RacoonBot')
-                    .addField('Servers', client.guilds.cache.size, true)
-                    .addField('Channels', client.channels.cache.size, true)
-                    .addField('Users', client.users.cache.size, true)
-                    .addField('Uptime', dateString, true)
-                    //.addField('Ram usage', `${bytesToSize(process.memoryUsage().heapUsed)}/${bytesToSize(os.totalmem)}`, false)
-                    //.addField('CPU', `${os.cpus()[0].model} (${os.cpus().length} core)`, false)
-                    // .addField('CPU architecture', `${os.arch()}`)
-                    //.addField('OS', `${os.platform()} ${os.release()}`, false)
-                    // .addField('OS', `${os.version()}`, true)
-                    //.addField('Nodejs version', process.version, false)
-                    //.addField('Discord.js version', '12.2.0', false)
-                    .setTimestamp();
+        const Embed = new Discord.MessageEmbed()
+            .setColor(message.member ? message.member.displayHexColor : 'RANDOM')
+            .setTitle('Bot stats')
+            .setAuthor(this.client.user.tag, this.client.user.displayAvatarURL())
+            .addField('Servers', this.client.guilds.cache.size, true)
+            .addField('Channels', this.client.channels.cache.size, true)
+            .addField('Users', this.client.users.cache.size, true)
+            .addField('Uptime', dateString, false)
+            .addField('Ram usage', `${bytesToSize(process.memoryUsage().heapUsed)}/${bytesToSize(os.totalmem)}`, true)
+            .addField('CPU', `${os.cpus()[0].model} (${os.cpus().length} core)`, true)
+            .addField('OS', `${os.platform()} ${os.release()}`, true)
+            .setTimestamp();
 
-                message.channel.send(statsEmbed);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    })
+        message.channel.send(Embed);
+
+    }
 }
+
+module.exports = StatsCommand;

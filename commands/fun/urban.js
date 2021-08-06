@@ -1,53 +1,71 @@
+const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const fetch = require('node-fetch');
-const config = require("../../json/config.json");
-
 const dotenv = require('dotenv');
 dotenv.config();
 
-module.exports = {
-    name: 'urban',
-    description: `Fetch an article from urban dictionary`,
-    category: 'fun',
-    execute(message, args) {
+class UrbanCommand extends Command {
+    constructor() {
+        super('urban', {
+            aliases: ['urban'],
+            category: 'fun',
+            clientPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
+            args: [
+                {
+                    id: 'definition',
+                    type: 'string',
+                    prompt: {
+                        start: 'Which word are you looking for?'
+                    }
+                }
+            ],
+            description: {
+                content: 'Look up for a word on Urban Dictionary',
+                usage: '[wat]',
+                examples: ['wat']
+            }
+        });
+    }
 
-        let urban = message.content.split(`${config.prefix}urban`).join("").trim();
+    async exec(message, args) {
 
-        if (!urban) {
-            return message.channel.send(`Which article are you looking for, ${message.author}?`);
-        }
+        let search = args.definition;
 
-        fetch(`https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=${urban}`, {
+        const i = Math.floor(Math.random() * Math.floor(10));
+
+        fetch(`https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=${search}`, {
             "method": "GET",
             "headers": {
                 "x-rapidapi-key": process.env.URBAN_DICTIONARY_SECRET_KEY,
                 "x-rapidapi-host": "mashape-community-urban-dictionary.p.rapidapi.com"
             }
+
         }).then(response => {
             return response.json();
+
         }).then((response) => {
-            const i = Math.floor(Math.random() * Math.floor(10));
 
-            const loading = new Discord.MessageEmbed()
-                .setColor("RANDOM")
-                .setTitle('Please wait...');
+            try {
+                const embed = new Discord.MessageEmbed()
+                    .setColor(message.member ? message.member.displayHexColor : 'RANDOM')
+                    .setAuthor('Urban dictionary')
+                    .setThumbnail('https://s3.amazonaws.com/mashape-production-logos/apis/53aa4f67e4b0a9b1348da532_medium')
+                    .setTitle(response.list[i].word)
+                    .setURL(response.list[i].permalink)
+                    .addField('Definition', response.list[i].definition, false)
+                    .addField('Example', response.list[i].example, false)
+                    .setFooter(`✍️${response.list[i].author} | 👍${response.list[i].thumbs_up} | 👎${response.list[i].thumbs_down}`)
+                    .setTimestamp()
 
-            message.channel.send(loading).then((msg) => {
-                setTimeout(() => {
-                    const embed = new Discord.MessageEmbed()
-                        .setColor("RANDOM")
-                        .setAuthor('Urban dictionary')
-                        .setThumbnail('https://s3.amazonaws.com/mashape-production-logos/apis/53aa4f67e4b0a9b1348da532_medium')
-                        .setTitle(response.list[i].word)
-                        .setURL(response.list[i].permalink)
-                        .addField('Definition', response.list[i].definition, false)
-                        .addField('Example', response.list[i].example, false)
-                        .setFooter(`✍️${response.list[i].author} | 👍${response.list[i].thumbs_up} | 👎${response.list[i].thumbs_down}`)
-                        .setTimestamp()
+                message.channel.send(embed);
 
-                    msg.edit(embed); // Send new message
-                }, 2000); // Wait 2 seconds before editing message
-            })
+            } catch {
+                return message.channel.send("I cannot find that word, maybe it doesn't exist?");
+            }
+
         });
-    },
-};
+
+    }
+}
+
+module.exports = UrbanCommand;

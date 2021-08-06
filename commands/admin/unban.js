@@ -1,32 +1,40 @@
-const config = require('../../json/config.json');
+const { Command } = require('discord-akairo');
 
-module.exports = (client) => {
-    client.on('message', message => {
-
-        if (message.author.bot) return;
-
-        let id = message.content.split(`${config.prefix}unban`).join("").trim();
-
-        if (message.content.startsWith(`${config.prefix}unban`)) {
-            if (message.member.hasPermission("BAN_MEMBERS")) { // If the user has BAN_MEMBERS permissions
-                try { // If the user set a valid ID, then continue
-                    if (!id) { // if no ID is specified, then error
-                        return message.channel.send("This doesn't look like an ID, please try again");
-                    } else { // if an ID is specified, then continue
-                        message.guild.members.unban(id)
-                            .then(() => { // if the user is banned, then unbanned
-                                message.channel.send(`<@${id}> has been unbanned!`);
-                            })
-                            .catch(() => { // If the user is already unbanned, then error
-                                message.channel.send("Could not unban this user, is he banned?");
-                            });
+class UnbanCommand extends Command {
+    constructor() {
+        super('unban', {
+            aliases: ['unban'],
+            category: 'admin',
+            args: [
+                {
+                    id: 'member',
+                    type: 'string',
+                    prompt: {
+                        start: 'Which user do you want to unban?',
+                        retry: "It doesn't seem to be a valid user, please try again!"
                     }
-                } catch { // If the user set an invalid ID, then error
-                    message.channel.send('There was an error with the command, please check if you set a valid ID');
                 }
-            } else { // If the user does not have BAN_MEMBERS permissions
-                message.reply("You do not have permissions to unban");
+            ],
+            clientPermissions: ['BAN_MEMBERS'],
+            userPermissions: ['BAN_MEMBERS'],
+            channel: 'guild',
+            description: {
+                content: 'Unban user by user ID',
+                usage: '[userID]',
+                examples: ['829230505123119164']
             }
-        }
-    })
+        });
+    }
+
+    async exec(message, args) {
+
+        let member = args.member.toString();
+
+        message.guild.members.unban(member)
+            .then(() => message.reply(`Member with ID : ${member} was successfully unbanned`))
+            .catch(err => console.error(err));
+
+    }
 }
+
+module.exports = UnbanCommand;

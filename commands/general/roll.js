@@ -1,18 +1,54 @@
+const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 
-module.exports = {
-    name: 'roll',
-    description: 'Rolls 2 dices.',
-    execute(message) {
+class RollCommand extends Command {
+    constructor() {
+        super('roll', {
+            aliases: ['roll', 'dice'],
+            category: 'general',
+            clientPermissions: ["SEND_MESSAGES"],
+            args: [
+                {
+                    id: 'amount',
+                    type: 'integer',
+                    optional: true
+                }
+            ],
+            description: {
+                content: 'Roll 2 dices',
+                usage: '[amount]',
+                examples: ['']
+            }
+        });
+    }
 
-        let diceOne = Math.floor(Math.random() * 6) + 1;
-        let diceTwo = Math.floor(Math.random() * 6) + 1;
+    exec(message, args) {
 
-        const rollEmbed = new Discord.MessageEmbed()
-            .setColor("RANDOM")
-            .setTitle('🎲\u2000Roll dice')
-            .setDescription(`Dice 1 : **${diceOne}**\nDice 2 : **${diceTwo}**`)
+        let dices;
+        let dicesNumber;
+        let result = 0;
+        let j = 1;
 
-        message.channel.send(rollEmbed);
-    },
-};
+        if (args.amount > 9) return message.reply('I can\'t roll more than 9 dices');
+
+        if (args.amount) { dicesNumber = args.amount; }
+        else { dicesNumber = 2; }
+
+        const embed = new Discord.MessageEmbed()
+            .setColor(message.member ? message.member.displayHexColor : 'RANDOM')
+            .setTitle('🎲\u2000Roll')
+
+        for (let i = 0; i < dicesNumber; i++) {
+            dices = Math.floor(Math.random() * 6) + 1;
+            result += dices;
+            embed.addField(`Dice ${j++}`, dices, true)
+        }
+
+        embed.setDescription(`Total: ${result}`);
+
+        message.channel.send(embed);
+
+    }
+}
+
+module.exports = RollCommand;

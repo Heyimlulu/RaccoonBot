@@ -1,26 +1,36 @@
-const config = require("../../json/config.json");
+const { Command } = require('discord-akairo');
 
-module.exports = (client) => {
-    client.on('message', message => {
-
-        if (!message.content.startsWith(`${config.prefix}status`) || message.author.bot) return;
-
-        if (message.member.id === '265896171384340480') {
-            try {
-                let statusName = message.content.split(`${config.prefix}status`).join("").trim();
-
-                if (!statusName) {
-                    return message.reply('Which status should I have?');
+class StatusCommand extends Command {
+    constructor() {
+        super('status', {
+            aliases: ['status'],
+            category: 'owner',
+            ownerOnly: true,
+            args: [
+                {
+                    id: 'status',
+                    type: 'string',
+                    prompt: {
+                        start: 'Which status should I have?'
+                    },
+                    match: 'rest'
                 }
-
-                client.user.setActivity(statusName, {type: "PLAYING"});
-
-                message.channel.send(`Status have been set to **${statusName}**`);
-            } catch (e) {
-                console.log(e);
+            ],
+            description: {
+                content: 'Change the status for the bot',
+                usage: '[status]',
+                example: ['Hello World!']
             }
-        } else {
-            message.reply('You did not have permissions to run that command!');
-        }
-    })
+        });
+    }
+
+    exec(message, args) {
+
+        this.client.user.setActivity(args.status);
+
+        message.channel.send(`Status have been set to **${args.status}**`);
+
+    }
 }
+
+module.exports = StatusCommand;

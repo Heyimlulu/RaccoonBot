@@ -1,0 +1,44 @@
+{
+  "owner": "265896171384340480",
+  "prefix": ["racoon"],
+  "statsChannel": "846320039976239144",
+  "discordbotlist": {
+    "name": "discordbotlist.com",
+    "url": "https://discordbotlist.com/api/v1/bots/734426328002068481/stats",
+    "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0IjoxLCJpZCI6IjczNDQyNjMyODAwMjA2ODQ4MSIsImlhdCI6MTYyMTg2ODQxNX0.lEGincDnzJ68-cFyQgH5knnN2fy4oIKI-pW22jfhu6g",
+    "body": "{\"guilds\": 0, \"users\": 0}"
+  },
+  "topgg": {
+    "name": "top.gg",
+    "url": "https://top.gg/api/bots/734426328002068481/stats",
+    "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDQyNjMyODAwMjA2ODQ4MSIsImJvdCI6dHJ1ZSwiaWF0IjoxNjIxODQ5MDIwfQ.cvyZPLWjGlcQCin_KmY9V57yOjpkXXZkICYPJyO9QMM",
+    "body": "{\"server_count\":{{SERVER_COUNT}}}"
+  },
+  "discordbotsgg": {
+    "name": "discord.bots.gg",
+    "url": "https://discord.bots.gg/api/v1/bots/734426328002068481/stats",
+    "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGkiOnRydWUsImlkIjoiMjY1ODk2MTcxMzg0MzQwNDgwIiwiaWF0IjoxNjIxMDI2MzQ3fQ.UdX4FOf9S6nw-N1Y1Fk-nbHhmsR9lkDsre0qs8HOJL4",
+    "body": "{\"guildCount\": {{SERVER_COUNT}}}"
+  },
+  "donation": {
+    "url": ""
+  },
+  "danbooru": {
+    "login": "Paanya"
+  },
+  "development": {
+    "database": "raccoonbotdb",
+    "username": "root",
+    "password": "",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "database": "dalevrup1220s3",
+    "username": "usejwgnczrgayq",
+    "password": "7de19e45333ea02e788e132e8b14e982f3d203be3fe410bcf0a403bebb732737",
+    "host": "ec2-52-87-58-157.compute-1.amazonaws.com",
+    "dialect": "postgres",
+    "logging": false
+  }
+}

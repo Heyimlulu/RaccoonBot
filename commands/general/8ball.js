@@ -1,22 +1,44 @@
-const answers = require('../../json/commands/general/8ball.json');
-const config = require('../../json/config.json');
+const { Command } = require('discord-akairo');
+const Discord = require('discord.js');
+const answer = require('../../json/commands/8ball.json');
 
-module.exports = {
-    name: '8ball',
-    description: 'Fortune-telling or seeking advice',
-    execute(message) {
-
-        let ask8ball = message.content.split(`${config.prefix}8ball`).join("").trim(); // Listen to user's input
-
-        if (!ask8ball) {
-            return message.reply('What do you want to know?');
-        }
-
-        message.channel.send('Let me think about it...').then((msg) => {
-            setTimeout(() => {
-                var reply = answers[Math.floor(Math.random()*answers.length)];
-                msg.edit(reply);
-            }, 2000);
+class EightBallCommand extends Command {
+    constructor() {
+        super('8ball', {
+            aliases: ['8ball', 'eightball'],
+            category: 'general',
+            clientPermissions: ["SEND_MESSAGES"],
+            args: [
+                {
+                    id: 'say',
+                    type: 'string',
+                    prompt: {
+                        start: 'You need to ask the 8ball a question!'
+                    },
+                    match: "rest"
+                }
+            ],
+            description: {
+                content: 'Fortune-telling or seeking advice',
+                usage: '[text]',
+                examples: ['']
+            }
         });
-    },
-};
+    }
+
+    async exec(message, args) {
+
+        let ask = args.say;
+        let reply = answer[Math.floor(Math.random() * answer.length) + 1];
+
+        const embed = new Discord.MessageEmbed()
+            .setColor(message.member ? message.member.displayHexColor : 'RANDOM')
+            .setTitle(ask)
+            .setDescription(reply)
+
+        await message.channel.send(embed);
+
+    }
+}
+
+module.exports = EightBallCommand;

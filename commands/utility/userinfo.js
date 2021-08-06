@@ -1,22 +1,43 @@
+const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 
-module.exports = {
-    name: 'userinfo',
-    description: 'Show info about a user!',
-    execute(message, args) {
+class UserInfoCommand extends Command {
+    constructor() {
+        super('userinfo', {
+            aliases: ['userinfo', 'user'],
+            category: 'utility',
+            clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS'],
+            args: [
+                {
+                    id: 'user',
+                    type: 'user',
+                    prompt: {
+                        start: 'Which user do you want to fetch information?'
+                    },
+                }
+            ],
+            description: {
+                content: 'Show info about a user',
+                usage: '[@user]',
+                example: ['user']
+            }
+        });
+    }
+
+    exec(message, args) {
 
         let user = message.author;
 
-        if(message.mentions.users.first()){
-            user = message.mentions.users.first();
+        if(args.user){
+            user = args.user;
         }
 
         let member = message.guild.member(user);
-        
+
         const Embed = new Discord.MessageEmbed()
-            .setAuthor('RacoonBot')
+            .setAuthor(this.client.user.tag, this.client.user.displayAvatarURL())
             .setTitle('User information')
-            .setColor(member ? member.displayHexColor : "RANDOM")
+            .setColor(message.member ? message.member.displayHexColor : 'RANDOM')
             .setThumbnail(user.displayAvatarURL())
             .addField("Username", `${user.username}`, false)
             .addField("Discriminator", "#" + user.discriminator, false)
@@ -47,5 +68,8 @@ module.exports = {
         }
 
         message.channel.send(Embed)
-    },
-};
+
+    }
+}
+
+module.exports = UserInfoCommand;
