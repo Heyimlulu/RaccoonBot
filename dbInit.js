@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const config = require('./config.json');
 
-const sequelize = new Sequelize(config.development);
+const sequelize = new Sequelize(config.production);
 
 require('./models/donator')(sequelize, Sequelize.DataTypes);
 require('./models/logs')(sequelize, Sequelize.DataTypes);
