@@ -5,7 +5,7 @@
   "discordbotlist": {
     "name": "discordbotlist.com",
     "url": "https://discordbotlist.com/api/v1/bots/734426328002068481/stats",
-    "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0IjoxLCJpZCI6IjczNDQyNjMyODAwMjA2ODQ4MSIsImlhdCI6MTYyMTg2ODQxNX0.lEGincDnzJ68-cFyQgH5knnN2fy4oIKI-pW22jfhu6g",
+    "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0IjoxLCJpZCI6IjgyOTIzMDUwNTEyMzExOTE2NCIsImlhdCI6MTYyMTAyMzI5Nn0.AR2g1XB9b68riPanGDjAvkhIIIPJwFy7mzWXymcT2-s",
     "body": "{\"guilds\": 0, \"users\": 0}"
   },
   "topgg": {
@@ -14,14 +14,8 @@
     "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczNDQyNjMyODAwMjA2ODQ4MSIsImJvdCI6dHJ1ZSwiaWF0IjoxNjIxODQ5MDIwfQ.cvyZPLWjGlcQCin_KmY9V57yOjpkXXZkICYPJyO9QMM",
     "body": "{\"server_count\":{{SERVER_COUNT}}}"
   },
-  "discordbotsgg": {
-    "name": "discord.bots.gg",
-    "url": "https://discord.bots.gg/api/v1/bots/734426328002068481/stats",
-    "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGkiOnRydWUsImlkIjoiMjY1ODk2MTcxMzg0MzQwNDgwIiwiaWF0IjoxNjIxMDI2MzQ3fQ.UdX4FOf9S6nw-N1Y1Fk-nbHhmsR9lkDsre0qs8HOJL4",
-    "body": "{\"guildCount\": {{SERVER_COUNT}}}"
-  },
   "donation": {
-    "url": ""
+    "url": "https://www.paypal.com/donate?hosted_button_id=JATUVJJF7PPPG"
   },
   "danbooru": {
     "login": "Paanya"

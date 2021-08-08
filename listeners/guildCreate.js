@@ -32,12 +32,6 @@ class GuildCreateListener extends Listener {
             await guildCounter(config.topgg.url, config.topgg.authorization, body)
         }
 
-        if (config.discordbotsgg) {
-            body = JSON.parse(config.discordbotsgg.body.replace('{{SERVER_COUNT}}', this.client.guilds.cache.size));
-
-            await guildCounter(config.discordbotsgg.url, config.discordbotsgg.authorization, body)
-        }
-
         async function guildCounter(url, auth, body) {
 
             await fetch(url, {
