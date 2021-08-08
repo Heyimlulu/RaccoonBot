@@ -25,10 +25,9 @@ class DonateCommand extends Command {
         const embed = new Discord.MessageEmbed()
             .setColor(message.member ? message.member.displayHexColor : 'RANDOM')
             .setTitle('Donation link')
-            .setURL(donation.url)
+            .setDescription(`Donations are optional, but are appreciated if you want to support ${this.client.user.tag} 💛\n[Paypal](${donation.url})`)
             .attachFiles(attachment)
-            .setImage('attachment://raccoon-heart.jpg')
-            .setDescription(`Donations are optional, but are appreciated if you want to support ${this.client.user.tag} 💛`);
+            .setImage('attachment://raccoon-heart.jpg');
 
         return message.channel.send(embed);
 

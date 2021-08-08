@@ -1,6 +1,6 @@
 {
   "owner": "265896171384340480",
-  "prefix": ["raccoon"],
+  "prefix": ["racoon"],
   "statsChannel": "846320039976239144",
   "discordbotlist": {
     "name": "discordbotlist.com",
@@ -15,7 +15,7 @@
     "body": "{\"server_count\":{{SERVER_COUNT}}}"
   },
   "donation": {
-    "url": ""
+    "url": "https://www.paypal.com/donate?hosted_button_id=JATUVJJF7PPPG"
   },
   "danbooru": {
     "login": "Paanya"
