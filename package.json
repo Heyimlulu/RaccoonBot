@@ -28,7 +28,7 @@
     "sequelize": "^6.6.2",
     "turndown": "^7.0.0",
     "youtube-dl": "^3.0.2",
-    "ytdl-core": "^3.3.0"
+    "ytdl-core": "^4.9.1"
   },
   "scripts": {
     "test": "node bot.js",
