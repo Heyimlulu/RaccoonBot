@@ -27,7 +27,7 @@
     "pg": "^8.5.1",
     "sequelize": "^6.6.2",
     "turndown": "^7.0.0",
-    "youtube-dl": "^3.0.2",
+    "youtube-dl": "^3.5.0",
     "ytdl-core": "^4.9.1"
   },
   "scripts": {
