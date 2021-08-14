@@ -6,7 +6,7 @@
   "main": "bot.js",
   "dependencies": {
     "4chan-boards": "^2.0.1",
-    "@google-cloud/storage": "^5.8.5",
+    "@google-cloud/storage": "^5.13.0",
     "@google-cloud/text-to-speech": "^3.1.1",
     "@discordjs/opus": "^0.5.3",
     "asciify-image": "^0.1.6",
