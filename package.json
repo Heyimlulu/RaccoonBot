@@ -21,7 +21,7 @@
     "ffmpeg": "0.0.4",
     "ffmpeg-static": "^4.4.0",
     "fluent-ffmpeg": "^2.1.2",
-    "meta-extractor": "^2.0.0",
+    "meta-extractor": "^2.1.0",
     "mysql2": "^2.3.0",
     "node-fetch": "^2.6.1",
     "pg": "^8.5.1",
