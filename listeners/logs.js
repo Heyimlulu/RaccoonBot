@@ -1,6 +1,6 @@
 const { Listener } = require('discord-akairo');
 const { owner, prefix } = require('../config.json');
-const Logs = require('../dbObjects').Logs;
+const Logs = require('../models').logs;
 
 class LogsListener extends Listener {
     constructor() {

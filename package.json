@@ -1,8 +1,8 @@
 {
   "name": "RaccoonBot",
   "author": "Lucas",
-  "version": "1.0.0",
-  "description": "A multifunction discord bot",
+  "version": "0.0.0",
+  "description": "A multipurpose bot for discord",
   "main": "bot.js",
   "dependencies": {
     "4chan-boards": "^2.0.1",
