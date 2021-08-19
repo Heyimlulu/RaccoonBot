@@ -2,8 +2,6 @@ const { Listener } = require('discord-akairo');
 const play = require('../json/status/playing.json');
 const watch = require('../json/status/streaming.json');
 const listen = require('../json/status/listening.json');
-// Imports the Google Cloud client library.
-const {Storage} = require('@google-cloud/storage');
 
 class readyListener extends Listener {
 
@@ -63,25 +61,6 @@ class readyListener extends Listener {
             }
 
         }
-
-        // Google Cloud
-        const storage = new Storage();
-
-        async function listBuckets() {
-            try {
-                const results = await storage.getBuckets();
-
-                const [buckets] = results;
-
-                console.log('Buckets:');
-                buckets.forEach(bucket => {
-                    console.log(bucket.name);
-                });
-            } catch (err) {
-                console.error('ERROR:', err);
-            }
-        }
-        listBuckets();
     }
 }
 
