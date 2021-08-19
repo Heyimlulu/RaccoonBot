@@ -57,6 +57,6 @@ class RaccoonBotClient extends AkairoClient {
 
 }
 
-const client = new RaccoonBotClient({ intent: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_BANS', 'GUILD_WEBHOOKS', 'GUILD_VOICE_STATES', 'GUILD_MESSAGE']});
+const client = new RaccoonBotClient();
 
 client.login(process.env.BOT_TOKEN);
