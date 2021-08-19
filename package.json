@@ -1,7 +1,7 @@
 {
   "name": "RaccoonBot",
   "author": "Lucas",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A multipurpose bot for discord",
   "main": "bot.js",
   "dependencies": {
