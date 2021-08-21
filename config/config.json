@@ -1,16 +1,16 @@
 {
   "development": {
-    "database": "raccoonbotdb",
-    "username": "root",
+    "database": "",
+    "username": "",
     "password": "",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
-    "database": "dalevrup1220s3",
-    "username": "usejwgnczrgayq",
-    "password": "7de19e45333ea02e788e132e8b14e982f3d203be3fe410bcf0a403bebb732737",
-    "host": "ec2-52-87-58-157.compute-1.amazonaws.com",
+    "database": "raccoondb",
+    "username": "raccoondb",
+    "password": "uuuwppqxmpy0c42z",
+    "host": "app-5afda13a-bcc8-4423-b300-15f2be1b1b14-do-user-9714737-0.b.db.ondigitalocean.com",
     "dialect": "postgres",
     "logging": false
   }
