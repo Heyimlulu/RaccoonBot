@@ -2,6 +2,7 @@ const { AkairoClient, CommandHandler, InhibitorHandler, ListenerHandler } = requ
 const dotenv = require('dotenv');
 dotenv.config();
 const config = require('./config.json');
+const updateGrid = require('./misc/updateGrid');
 
 class RaccoonBotClient extends AkairoClient {
 
@@ -58,5 +59,11 @@ class RaccoonBotClient extends AkairoClient {
 }
 
 const client = new RaccoonBotClient();
+require("discord-buttons")(client);
 
 client.login(process.env.BOT_TOKEN);
+
+client.on('clickButton', async button => {
+    // Tic Tac Toe
+    await updateGrid(button);
+});
