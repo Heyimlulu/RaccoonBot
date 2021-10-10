@@ -1,0 +1,87 @@
+const { Command } = require('discord-akairo');
+const axios = require('axios');
+const superagent = require('superagent');
+
+class StrawpollCommand extends Command {
+    constructor() {
+        super('strawpoll', {
+            aliases: ['strawpoll'],
+            category: 'fun',
+            args: [
+                {
+                    id: 'title',
+                    type: 'string',
+                    prompt: {
+                        start: 'Which title should I have?'
+                    }
+                },
+                {
+                    id: 'options',
+                    type: 'string',
+                    prompt: {
+                        start: 'What are the options?'
+                    },
+                    match: 'rest'
+                },
+                {
+                    id: 'multi',
+                    match: 'flag',
+                    flag: '--multi'
+                }
+            ],
+            description: {
+                content: 'Create a poll (use | to separate options)',
+                usage: '[title] [options] [--multi]',
+                examples: ['"Am I a cute bot?" yes | no | ofc you are ;3']
+            }
+        });
+    }
+
+    async exec(message, args) {
+
+        let options = args.options.trim().split('|');
+
+        // let request = JSON.stringify({
+        //     title: args.title,
+        //     options: options,
+        //     multi: args.multi
+        // });
+
+        // let headers = { 'Content-Type': 'application/json' };
+
+        // console.log(request);
+        // console.log(JSON.stringify(request));
+
+        // const response = await axios.post('https://www.strawpoll.me/api/v2/polls', request, { headers });
+        const response = await superagent
+        .post('https://www.strawpoll.me/api/v2/polls')
+        .set('Content-Type', 'application/json')
+        .send({
+            title: args.title,
+            options: options,
+            multi: args.multi
+        })
+        .catch((error) => console.log(`An error has occurred: **${error}**`));
+
+        console.log(response);
+
+        // message.channel.send(`An error has occurred: **${error}**`)
+
+
+        // fetch('https://www.strawpoll.me/api/v2/polls', {
+
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify(request),
+
+        // }).then((response) => {
+        //     return response.json();
+
+        // }).then((response) => {
+        //     return message.channel.send(`Your strawpoll is ready! https://www.strawpoll.me/${response.id}`);
+        // });
+
+    }
+}
+
+module.exports = StrawpollCommand;

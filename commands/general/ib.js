@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
-const fetch = require('node-fetch');
+const axios = require('axios');
 
 class InspiroBotCommand extends Command {
     constructor() {
@@ -24,17 +24,18 @@ class InspiroBotCommand extends Command {
             .setTitle('InspiroBot')
             .setFooter('Powered by https://inspirobot.me/')
 
-        fetch('http://inspirobot.me/api?generate=true')
-            .then(res => res.text())
-            .then(body => {
+        await axios.get('http://inspirobot.me/api?generate=true')
+        .then(async (response) => {
 
-                embed.setImage(body)
-                    .setURL(body);
-                
+            const result = response.data;
 
-                message.channel.send(embed);
+            embed.setImage(result)
+            .setURL(result);
+        
 
-            });
+            await message.channel.send(embed);
+
+        })
 
     }
 }

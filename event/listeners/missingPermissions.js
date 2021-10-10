@@ -1,5 +1,4 @@
 const { Listener } = require('discord-akairo');
-const Discord = require('discord.js');
 
 class MissingPermissionsListener extends Listener {
     constructor() {

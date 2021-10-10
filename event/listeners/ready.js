@@ -1,7 +1,7 @@
 const { Listener } = require('discord-akairo');
-const play = require('../json/status/playing.json');
-const watch = require('../json/status/streaming.json');
-const listen = require('../json/status/listening.json');
+const play = require('../../json/status/playing.json');
+const watch = require('../../json/status/streaming.json');
+const listen = require('../../json/status/listening.json');
 
 class readyListener extends Listener {
 

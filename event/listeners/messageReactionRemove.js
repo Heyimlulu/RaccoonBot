@@ -1,7 +1,7 @@
 const { Listener } = require('discord-akairo');
 const Discord = require('discord.js');
 const fs = require('fs');
-const messageID = require('../json/messageID.json');
+const messageID = require('../../json/messageID.json');
 
 class MessageReactionRemoveListener extends Listener {
     constructor() {

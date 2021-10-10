@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
-const Discord = require('discord.js');
-const fetch = require('node-fetch');
+const { MessageEmbed } = require('discord.js');
+const axios = require('axios');
 
 class AdviceCommand extends Command {
     constructor() {
@@ -16,19 +16,21 @@ class AdviceCommand extends Command {
         });
     }
 
-    exec(message, args) {
+    async exec(message, args) {
 
-        fetch("http://api.adviceslip.com/advice").then((response) => {
-            return response.json();
+        await axios.get('http://api.adviceslip.com/advice')
+        .then(async (response) => {
 
-        }).then((response) => {
-            const adviceEmbed = new Discord.MessageEmbed()
-                .setColor(message.member ? message.member.displayHexColor : 'RANDOM')
-                .setAuthor(`${this.client.user.username}`)
-                .setTitle('Random advice')
-                .setDescription(response.slip.advice)
+            const result = response.data;
 
-            message.channel.send(adviceEmbed);
+            const adviceEmbed = new MessageEmbed()
+            .setColor(message.member ? message.member.displayHexColor : 'RANDOM')
+            .setAuthor(`${this.client.user.username}`)
+            .setTitle('Random advice')
+            .setDescription(result.slip.advice)
+
+            await message.channel.send(adviceEmbed);
+
         })
 
     }

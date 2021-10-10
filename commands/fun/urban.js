@@ -1,8 +1,8 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
-const fetch = require('node-fetch');
 const dotenv = require('dotenv');
 dotenv.config();
+const axios = require('axios');
 
 class UrbanCommand extends Command {
     constructor() {
@@ -31,40 +31,31 @@ class UrbanCommand extends Command {
 
         let search = args.definition;
 
-        const i = Math.floor(Math.random() * Math.floor(10));
-
-        fetch(`https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=${search}`, {
-            "method": "GET",
-            "headers": {
+        await axios.get(`https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=${search}`, {
+            headers: {
                 "x-rapidapi-key": process.env.URBAN_DICTIONARY_SECRET_KEY,
                 "x-rapidapi-host": "mashape-community-urban-dictionary.p.rapidapi.com"
             }
+        })
+        .then(async (response) => {
 
-        }).then(response => {
-            return response.json();
+            const result = response.data.list;
 
-        }).then((response) => {
+            const i = Math.floor(Math.random() * result.length);
 
-            try {
-                const embed = new Discord.MessageEmbed()
-                    .setColor(message.member ? message.member.displayHexColor : 'RANDOM')
-                    .setAuthor('Urban dictionary')
-                    .setThumbnail('https://s3.amazonaws.com/mashape-production-logos/apis/53aa4f67e4b0a9b1348da532_medium')
-                    .setTitle(response.list[i].word)
-                    .setURL(response.list[i].permalink)
-                    .addField('Definition', response.list[i].definition, false)
-                    .addField('Example', response.list[i].example, false)
-                    .setFooter(`✍️${response.list[i].author} | 👍${response.list[i].thumbs_up} | 👎${response.list[i].thumbs_down}`)
-                    .setTimestamp()
+            const embed = new Discord.MessageEmbed()
+                .setColor(message.member ? message.member.displayHexColor : 'RANDOM')
+                .setAuthor('Urban dictionary')
+                .setThumbnail('https://s3.amazonaws.com/mashape-production-logos/apis/53aa4f67e4b0a9b1348da532_medium')
+                .setTitle(result[i].word)
+                .setURL(result[i].permalink)
+                .addField('Definition', result[i].definition, false)
+                .addField('Example', result[i].example, false)
+                .setFooter(`✍️${result[i].author} | 👍${result[i].thumbs_up} | 👎${result[i].thumbs_down}`)
+                .setTimestamp()
 
-                message.channel.send(embed);
-
-            } catch {
-                return message.channel.send("I cannot find that word, maybe it doesn't exist?");
-            }
-
-        });
-
+            message.channel.send(embed);
+        }).catch(() => message.channel.send("I cannot find that word, maybe it doesn't exist?"))
     }
 }
 

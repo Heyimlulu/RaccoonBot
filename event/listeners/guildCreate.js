@@ -1,14 +1,15 @@
 const { Listener } = require('discord-akairo');
-const { statsChannel } = require('../config.json');
+const { statsChannel } = require('../../config.json');
 const Discord = require('discord.js');
-const fetch = require('node-fetch');
-const config = require('../config.json');
+// const fetch = require('node-fetch');
+const config = require('../../config/bot-sites.json');
+const guildBlacklist = require('../../models').guildBlacklist;
 
-class GuildDeleteListener extends Listener {
+class GuildCreateListener extends Listener {
     constructor() {
-        super('guildDelete', {
+        super('guildCreate', {
             emitter: 'client',
-            event: 'guildDelete'
+            event: 'guildCreate'
         });
     }
 
@@ -50,8 +51,8 @@ class GuildDeleteListener extends Listener {
         let botCount = guild.members.cache.filter(member => member.user.bot).size;
 
         const embed = new Discord.MessageEmbed()
-            .setColor('#FF0000')
-            .setTitle('Someone just removed me from their guild ;(')
+            .setColor('#52e80d')
+            .setTitle('Someone invited me in their guild')
             .setThumbnail(guild.iconURL())
             .addField('Guild', `${guild.name} (${guild.id})`)
             .addField('Total number of members', guild.memberCount, true)
@@ -61,9 +62,16 @@ class GuildDeleteListener extends Listener {
             .setFooter(`I'm now in ${this.client.guilds.cache.size} servers!`)
             .setTimestamp();
 
+        const blacklist = await guildBlacklist.findOne({where: {guildID: guild.id}});
+
+        if (blacklist) {
+            guild.leave();
+            return channel.send(`${guild.owner.user.username} (${guild.owner.id}) from ${guild.name} (${guild.id}) tried to add me to their guild while being blacklisted!`);
+        }
+
         channel.send(embed);
 
     }
 }
 
-module.exports = GuildDeleteListener;
+module.exports = GuildCreateListener;

@@ -1,5 +1,5 @@
 const { Listener } = require('discord-akairo');
-const { statsChannel } = require('../config.json');
+const { statsChannel } = require('../../config.json');
 const Discord = require('discord.js');
 let report = [];
 let time = new Date();

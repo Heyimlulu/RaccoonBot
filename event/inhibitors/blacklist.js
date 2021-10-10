@@ -1,5 +1,5 @@
 const { Inhibitor } = require('discord-akairo');
-const blacklistID = require('../json/blacklistID.json');
+const blacklistID = require('../../json/blacklistID.json');
 
 class BlacklistInhibitor extends Inhibitor {
     constructor() {
