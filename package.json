@@ -27,7 +27,7 @@
     "fluent-ffmpeg": "^2.1.2",
     "jimp": "^0.16.1",
     "meta-extractor": "^2.1.0",
-    "mysql2": "^2.3.0",
+    "mysql2": "^2.3.2",
     "pg": "^8.7.1",
     "sequelize": "^6.7.0",
     "superagent": "^6.1.0",
