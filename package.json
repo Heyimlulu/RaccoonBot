@@ -20,7 +20,7 @@
     "currency-converter-lt": "^1.1.4",
     "discord-akairo": "^8.1.0",
     "discord-buttons": "^4.0.0",
-    "discord.js": "^12.5.3",
+    "discord.js": "^13.3.0",
     "dotenv": "^10.0.0",
     "ffmpeg": "0.0.4",
     "ffmpeg-static": "^4.4.0",
