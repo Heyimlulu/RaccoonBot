@@ -27,7 +27,7 @@ class MessageListener extends Listener {
         let embed = new MessageEmbed()
             .setThumbnail('https://emoji.gg/assets/emoji/5239_ping.png')
             .setTitle('Who pinged me?')
-            .setDescription(`Server : ${message.guild.name}\nChannel : ${message.channel.name}\n\n${message.author.username} : ${message.content}`)
+            .setDescription(`Server : ${message.guild.name}\nChannel : ${message.channel.name}\n\n${message.author.username}#${message.author.discriminator} : ${message.content}`)
             .setTimestamp();
 
         if (message.mentions.has(this.client.user.id)) {
