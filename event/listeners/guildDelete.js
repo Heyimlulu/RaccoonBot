@@ -3,6 +3,7 @@ const { statsChannel } = require('../../config.json');
 const Discord = require('discord.js');
 // const fetch = require('node-fetch');
 const config = require('../../config.json');
+const axios = require("axios");
 
 class GuildDeleteListener extends Listener {
     constructor() {
@@ -16,6 +17,12 @@ class GuildDeleteListener extends Listener {
 
         let body;
 
+        if (config.topgg) {
+            body = JSON.parse(config.topgg.body.replace('{{SERVER_COUNT}}', this.client.guilds.cache.size));
+
+            await guildCounter(config.topgg.url, config.topgg.authorization, body)
+        }
+
         if (config.discordbotlist) {
             body = JSON.parse(config.discordbotlist.body);
 
@@ -25,22 +32,14 @@ class GuildDeleteListener extends Listener {
             await guildCounter(config.discordbotlist.url, config.discordbotlist.authorization, body);
         }
 
-        if (config.topgg) {
-            body = JSON.parse(config.topgg.body.replace('{{SERVER_COUNT}}', this.client.guilds.cache.size));
-
-            await guildCounter(config.topgg.url, config.topgg.authorization, body)
-        }
-
         async function guildCounter(url, auth, body) {
 
-            await fetch(url, {
-                method: 'post',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': auth
-                },
-                body: JSON.stringify(body)
-            }).then((response) => console.log(response));
+            await axios.post(url, body, {
+                'Content-Type': 'application/json',
+                'Authorization': auth
+            })
+                .then((response) => console.log(response))
+                .catch((error) => console.log(error));
 
         }
 
