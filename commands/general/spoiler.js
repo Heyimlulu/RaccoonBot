@@ -24,12 +24,12 @@ class SpoilerCommand extends Command {
         });
     }
 
-    exec(message, args) {
+    async exec(message, args) {
 
         let spoiler = args.spoil;
 
-        message.delete();
-        message.channel.send('||' + spoiler + '||');
+        await message.delete();
+        await message.channel.send('||' + spoiler + '||');
 
     }
 }

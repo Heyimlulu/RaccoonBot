@@ -22,7 +22,7 @@ class RollCommand extends Command {
         });
     }
 
-    exec(message, args) {
+    async exec(message, args) {
 
         let dices;
         let dicesNumber;
@@ -46,7 +46,7 @@ class RollCommand extends Command {
 
         embed.setDescription(`Total: ${result}`);
 
-        message.channel.send(embed);
+        await message.channel.send(embed);
 
     }
 }

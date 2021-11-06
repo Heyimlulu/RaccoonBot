@@ -15,7 +15,7 @@ class FlipCommand extends Command {
         });
     }
 
-    exec(message, args) {
+    async exec(message, args) {
 
         let coin = [
             'Tails',
@@ -29,7 +29,7 @@ class FlipCommand extends Command {
             .setTitle('🪙\u2000Coin flip')
             .setDescription(`It's **${coinFlip}**`)
 
-        message.channel.send(flipEmbed);
+        await message.channel.send(flipEmbed);
 
     }
 }

@@ -24,12 +24,12 @@ class SaydCommand extends Command {
         });
     }
 
-    exec(message, args) {
+    async exec(message, args) {
 
         let sayd = args.sentence;
 
-        message.delete();
-        message.channel.send(sayd);
+        await message.delete();
+        await message.channel.send(sayd);
 
     }
 }

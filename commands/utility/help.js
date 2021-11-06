@@ -27,7 +27,7 @@ class HelpCommand extends Command {
         });
     }
 
-    exec(message, { command, args }) {
+    async exec(message, { command, args }) {
 
         if (!command) return this.execCommandList(message);
 

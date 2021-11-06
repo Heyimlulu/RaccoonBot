@@ -15,7 +15,7 @@ class InviteCommand extends Command {
         });
     }
 
-    exec(message) {
+    async exec(message) {
 
         const embed = new Discord.MessageEmbed()
             .setColor(message.member ? message.member.displayHexColor : 'RANDOM')
@@ -25,7 +25,7 @@ class InviteCommand extends Command {
             .addField('Invite', '[Click here!](https://discord.com/api/oauth2/authorize?client_id=734426328002068481&permissions=268692502&scope=bot)', true)
             .addField('Commands', `\u0060${prefix} help\u0060`, true)
 
-        message.channel.send(embed);
+        await message.channel.send(embed);
 
     }
 }

@@ -15,7 +15,7 @@ class StatsCommand extends Command {
         });
     }
 
-    exec(message) {
+    async exec(message) {
 
         var uptime = process.uptime();
         const date = new Date(uptime*1000);
@@ -49,12 +49,12 @@ class StatsCommand extends Command {
             .addField('Channels', this.client.channels.cache.size, true)
             .addField('Users', this.client.users.cache.size, true)
             .addField('Uptime', dateString, false)
-            .addField('Ram usage', `${bytesToSize(process.memoryUsage().heapUsed)}/${bytesToSize(os.totalmem)}`, true)
-            .addField('CPU', `${os.cpus()[0].model} (${os.cpus().length} core)`, true)
-            .addField('OS', `${os.platform()} ${os.release()}`, true)
+            //.addField('Ram usage', `${bytesToSize(process.memoryUsage().heapUsed)}/${bytesToSize(os.totalmem)}`, true)
+            //.addField('CPU', `${os.cpus()[0].model} (${os.cpus().length} core)`, true)
+            //.addField('OS', `${os.platform()} ${os.release()}`, true)
             .setTimestamp();
 
-        message.channel.send(Embed);
+        await message.channel.send(Embed);
 
     }
 }

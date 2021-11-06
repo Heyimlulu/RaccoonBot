@@ -15,14 +15,14 @@ class CommandsLoadedCommand extends Command {
         });
     }
 
-    exec(message, args) {
+    async exec(message, args) {
 
         const embed = new Discord.MessageEmbed()
             .setColor(message.member ? message.member.displayHexColor : 'RANDOM')
             .setAuthor(this.client.user.tag, this.client.user.displayAvatarURL())
             .setTitle(`There are \u0060${this.client.commandHandler.modules.size - 9}\u0060 commands loaded!`);
 
-        message.channel.send(embed);
+        await message.channel.send(embed);
 
     }
 }
