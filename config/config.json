@@ -1,7 +1,7 @@
 {
   "development": {
-    "database": "",
-    "username": "",
+    "database": "paanyadb",
+    "username": "root",
     "password": "",
     "host": "127.0.0.1",
     "dialect": "mysql"
