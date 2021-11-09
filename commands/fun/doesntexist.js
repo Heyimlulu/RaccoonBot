@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const fs = require('fs');
-const fetch = require('node-fetch');
+// const fetch = require('node-fetch');
 const os = require('os');
 
 class DoesntExistCommand extends Command {

@@ -23,7 +23,7 @@ class AvatarCommand extends Command {
         });
     }
 
-    exec(message, args) {
+    async exec(message, args) {
 
         let image = args.image;
 
@@ -39,7 +39,7 @@ class AvatarCommand extends Command {
 
         })
 
-        message.channel.send('My avatar has been changed!')
+        await message.channel.send('My avatar has been changed!')
 
     }
 }

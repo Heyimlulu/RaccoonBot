@@ -4,32 +4,34 @@
   "version": "1.0.0",
   "description": "A multipurpose bot for discord",
   "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
   "dependencies": {
-    "4chan-boards": "^2.0.1",
-    "@google-cloud/storage": "^5.13.1",
-    "@google-cloud/text-to-speech": "^3.2.7",
     "@discordjs/opus": "^0.6.0",
-    "asciify-image": "^0.1.6",
+    "@google-cloud/storage": "^5.15.6",
+    "@google-cloud/text-to-speech": "^3.3.1",
+    "4chan-boards": "^2.0.1",
+    "asciify-image": "^0.1.8",
+    "axios": "^0.24.0",
     "body-parser": "^1.18.3",
     "canvas": "^2.8.0",
     "cheerio": "^1.0.0-rc.10",
+    "currency-converter-lt": "^1.1.4",
     "discord-akairo": "^8.1.0",
-    "discord.js": "^13.1.0",
+    "discord-buttons": "^4.0.0",
+    "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",
     "ffmpeg": "0.0.4",
     "ffmpeg-static": "^4.4.0",
     "fluent-ffmpeg": "^2.1.2",
+    "jimp": "^0.16.1",
     "meta-extractor": "^2.1.0",
-    "mysql2": "^2.3.0",
-    "node-fetch": "^2.6.1",
+    "mysql2": "^2.3.2",
     "pg": "^8.7.1",
-    "sequelize": "^6.6.5",
+    "sequelize": "^6.9.0",
+    "superagent": "^6.1.0",
     "turndown": "^7.1.1",
-    "youtube-dl": "^3.5.0",
     "ytdl-core": "^4.9.1"
-  },
-  "scripts": {
-    "test": "node bot.js",
-    "start": "node bot.js"
   }
 }

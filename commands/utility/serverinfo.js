@@ -15,7 +15,7 @@ class ServerInfoCommand extends Command {
         });
     }
 
-    exec(message, args) {
+    async exec(message, args) {
 
         let botCount = message.guild.members.cache.filter(member => member.user.bot).size;
 
@@ -32,7 +32,7 @@ class ServerInfoCommand extends Command {
             .addField('Owner', message.guild.owner, false)
             .setTimestamp();
 
-        message.channel.send(serverInfo);
+        await message.channel.send(serverInfo);
 
     }
 }

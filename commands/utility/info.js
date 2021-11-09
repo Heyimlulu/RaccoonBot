@@ -27,7 +27,7 @@ class InfoCommand extends Command {
             .addField('Owner', `${this.client.users.resolve(owner).tag} (${this.client.users.resolve(owner).id})`)
             .addField('My GitHub profile', 'https://github.com/Heyimlulu')
             .addField('Total commands', `${this.client.commandHandler.modules.size - 12}`)
-            .addField('Support server', 'none yet')
+            .addField('Support server', 'https://discord.gg/G43WEkkZ7w')
             .addField('Contact', `Use ${prefix[0]} feedback <\message\> to let me know what you think of my bot ;3`)
             .attachFiles(attachment)
             .setImage('attachment://Pet-Raccoons.png')

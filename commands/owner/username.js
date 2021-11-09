@@ -23,11 +23,11 @@ class UsernameCommand extends Command {
         });
     }
 
-    exec(message, args) {
+    async exec(message, args) {
 
-        this.client.user.setUsername(args.username);
+        await this.client.user.setUsername(args.username);
 
-        message.channel.send(`My username has been changed to ${args.username}`);
+        await message.channel.send(`My username has been changed to ${args.username}`);
 
     }
 }

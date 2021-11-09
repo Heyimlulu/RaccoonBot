@@ -24,7 +24,7 @@ class UserInfoCommand extends Command {
         });
     }
 
-    exec(message, args) {
+    async exec(message, args) {
 
         let user = message.author;
 
@@ -67,7 +67,7 @@ class UserInfoCommand extends Command {
             if (member.roles) Embed.addField('Roles', `${member.roles.cache.array().join(', ')}`);
         }
 
-        message.channel.send(Embed)
+        await message.channel.send(Embed)
 
     }
 }

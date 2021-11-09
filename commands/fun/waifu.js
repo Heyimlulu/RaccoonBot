@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
-const fetch = require('node-fetch');
+const axios = require('axios');
 
 class WaifuCommand extends Command {
     constructor() {
@@ -18,20 +18,20 @@ class WaifuCommand extends Command {
 
     async exec(message) {
 
-        if (!message.channel.nsfw) return message.channel.send('You must be in a NSFW channel only to use this command!');
+        // if (!message.channel.nsfw) return message.channel.send('You must be in a NSFW channel only to use this command!');
 
-        fetch('https://waifu.pics/api/sfw/waifu').then(response => {
-            return response.json();
-        }).then(response => {
+        await axios.get('https://waifu.pics/api/sfw/waifu')
+        .then(async (response) => {
+
+            const result = response.data;
 
             const embed = new Discord.MessageEmbed()
                 .setColor(message.member ? message.member.displayHexColor : 'RANDOM')
                 .setAuthor(message.member.user.tag, message.member.user.displayAvatarURL())
-                .setImage(response.url)
+                .setImage(result.url)
                 .setFooter('Powered by waifu.pics')
 
             message.channel.send(embed);
-
 
         })
 

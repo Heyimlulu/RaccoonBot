@@ -1,14 +1,13 @@
 const { Command } = require('discord-akairo');
-const Discord = require('discord.js');
-const fetch = require('node-fetch');
+const { MessageEmbed } = require('discord.js');
 const dotenv = require('dotenv');
 dotenv.config();
-const config = require('../../config.json');
+const axios = require('axios');
 
 class SafebooruCommand extends Command {
     constructor() {
         super('safebooru', {
-            aliases: ['safebooru'],
+            aliases: ['safebooru', 'safeb'],
             category: 'fun',
             clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS'],
             description: {
@@ -21,25 +20,28 @@ class SafebooruCommand extends Command {
 
     async exec(message, args) {
 
-        if (!message.channel.nsfw) return message.channel.send('You must be in a NSFW channel only to use this command!');
+        // if (!message.channel.nsfw) return message.channel.send('You must be in a NSFW channel only to use this command!');
 
-        fetch(`https://safebooru.org/index.php?page=dapi&s=post&q=index&json=1`).then((response) => {
-            return response.json();
-        }).then((response) => {
+        await axios.get('https://safebooru.org/index.php?page=dapi&s=post&q=index&json=1')
+        .then(async (response) => {
 
-            const i = Math.floor((Math.random() * response.length));
+            const result = await response.data;
+
+            const i = Math.floor((Math.random() * result.length));
 
             //console.log(`https://safebooru.org/images/3308/${response[i].image}`);
 
-            const embed = new Discord.MessageEmbed()
+            console.log(result[i].directory);
+            console.log(result[i].image);
+
+            const embed = new MessageEmbed()
                 .setColor(message.member ? message.member.displayHexColor : 'RANDOM')
                 .setAuthor(message.member.user.tag, message.member.user.displayAvatarURL())
-                .setImage(`https://safebooru.org/images/${response[i].directory}/${response[i].image}`)
-                //.setFooter(`tags: ${response[i].tags}`)
+                .setImage(`https://safebooru.org/images/${result[i].directory}/${result[i].image}`)
+                //.setFooter(`tags: ${result[i].tags}`)
 
             message.channel.send(embed);
         });
-
     }
 }
 

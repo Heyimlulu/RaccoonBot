@@ -19,8 +19,8 @@ class ReloadCommand extends Command {
         });
     }
 
-    exec(message, args) {
-        
+    async exec(message, args) {
+
         // `this` refers to the command object.
         this.handler.reload(args.commandID);
         return message.reply(`Reloaded command ${args.commandID}!`);

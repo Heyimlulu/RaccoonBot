@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const fetch = require('node-fetch');
+const axios = require('axios');
 
 class InsultCommand extends Command {
     constructor() {
@@ -30,10 +30,13 @@ class InsultCommand extends Command {
             lang = args.lang;
         }
 
-        fetch(`https://evilinsult.com/generate_insult.php?lang=${lang}&type=json`).then(response => {
-            return response.json();
-        }).then(response => {
-            message.channel.send(response.insult);
+        await axios.get(`https://evilinsult.com/generate_insult.php?lang=${lang}&type=json`)
+        .then(async (response) => {
+
+            const result = response.data;
+
+            await message.channel.send(result.insult);
+
         })
 
     }

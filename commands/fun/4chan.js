@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
-const fetch = require('node-fetch');
 const boards = require('4chan-boards');
+const axios = require('axios');
 const { MessageEmbed } = require('discord.js');
 
 // Avoid HTML syntax to appear on discord
@@ -39,28 +39,29 @@ class FourChanCommand extends Command {
 
         let i = Math.floor((Math.random() * 5) + 1);
 
-        fetch(`https://a.4cdn.org/${args.board}/${i}.json`).then((response) => {
-            return response.json();
-        }).then((response) => {
+        await axios.get(`https://a.4cdn.org/${args.board}/${i}.json`)
+        .then(async (response) => {
+            
+            const result = response.data;
 
             // IF => no threads found then return
-            if (!response.threads) return message.channel.send('I couldn\'t find this board! Are you sure you put a valid board?');
+            if (!result.threads) return message.channel.send('I couldn\'t find this board! Are you sure you put a valid board?');
 
             // Randomly reinitialize variable by all found threads
-            i = Math.floor((Math.random() * response.threads.length) + 1);
+            i = Math.floor((Math.random() * result.threads.length) + 1);
 
             // WHILE LOOP => Until it found a threads
-            while(!response.threads[i]) {
-                i = Math.floor((Math.random() * response.threads.length) + 1);
+            while(!result.threads[i]) {
+                i = Math.floor((Math.random() * result.threads.length) + 1);
             }
 
             // If post is sticky search
-            while(response.threads[i].posts[0].sticky == 1 || !response.threads[i].posts) {
-                i = Math.floor((Math.random() * response.threads.length));
+            while(result.threads[i].posts[0].sticky == 1 || !result.threads[i].posts) {
+                i = Math.floor((Math.random() * result.threads.length));
             }
 
-            let title = response.threads[i].posts[0].sub;
-            let description = response.threads[i].posts[0].com;
+            let title = result.threads[i].posts[0].sub;
+            let description = result.threads[i].posts[0].com;
             let boardName = boards.getName(args.board);
 
             // IF => No title or description then reinitialize variables
@@ -68,31 +69,86 @@ class FourChanCommand extends Command {
             if (!description) { description = 'No description'; }
             if (!boardName) { boardName = args.board; }
 
-            console.log(response.threads[i].posts[0]);
+            console.log(result.threads[i].posts[0]);
 
             const embed = new MessageEmbed()
                 .setAuthor(message.member.user.tag, message.member.user.displayAvatarURL())
                 .setColor(message.member ? message.member.displayHexColor : 'RANDOM')
                 .setTitle(turndown.turndown(title))
                 .setDescription(turndown.turndown(description))
-                .setImage(`https://i.4cdn.org/${args.board}/${response.threads[i].posts[0].tim}${response.threads[i].posts[0].ext}`)
-                .setURL(`https://boards.4channel.org/${args.board}/thread/${response.threads[i].posts[0].no}/${response.threads[i].posts[0].semantic_url}`)
-                .setFooter(`${boardName} | ${response.threads[i].posts[0].name} | ${response.threads[i].posts[0].no}  | ${response.threads[i].posts[0].now}`);
+                .setImage(`https://i.4cdn.org/${args.board}/${result.threads[i].posts[0].tim}${result.threads[i].posts[0].ext}`)
+                .setURL(`https://boards.4channel.org/${args.board}/thread/${result.threads[i].posts[0].no}/${result.threads[i].posts[0].semantic_url}`)
+                .setFooter(`${boardName} | ${result.threads[i].posts[0].name} | ${result.threads[i].posts[0].no}  | ${result.threads[i].posts[0].now}`);
 
             // IF => File type doesn't work on embed message then send it as a link
-            if (response.threads[i].posts[0].ext == '.webm' || response.threads[i].posts[0].ext == '.pdf' || response.threads[i].posts[0].ext == '.swf') {
+            if (result.threads[i].posts[0].ext == '.webm' || result.threads[i].posts[0].ext == '.pdf' || result.threads[i].posts[0].ext == '.swf') {
                 message.channel.send(embed);
-                message.channel.send(`https://i.4cdn.org/${args.board}/${response.threads[i].posts[0].tim}${response.threads[i].posts[0].ext}`);
+                message.channel.send(`https://i.4cdn.org/${args.board}/${result.threads[i].posts[0].tim}${result.threads[i].posts[0].ext}`);
             } else {
                 message.channel.send(embed);
             }
 
-        })
-            .catch((err) => {
-                if (err.type == 'invalid-json') return message.channel.send('I couldn\'t find this board! Are you sure you put a valid board?');
-                console.error(err);
+
+        }).catch((error) => {
+                if (error.type == 'invalid-json') return message.channel.send('I couldn\'t find this board! Are you sure you put a valid board?');
+                console.error(error);
                 return message.channel.send('Uh-oh, an error has occurred! Please try again!');
-            });
+        })
+
+        // fetch(`https://a.4cdn.org/${args.board}/${i}.json`).then((response) => {
+        //     return response.json();
+        // }).then((response) => {
+
+        //     // IF => no threads found then return
+        //     if (!response.threads) return message.channel.send('I couldn\'t find this board! Are you sure you put a valid board?');
+
+        //     // Randomly reinitialize variable by all found threads
+        //     i = Math.floor((Math.random() * response.threads.length) + 1);
+
+        //     // WHILE LOOP => Until it found a threads
+        //     while(!response.threads[i]) {
+        //         i = Math.floor((Math.random() * response.threads.length) + 1);
+        //     }
+
+        //     // If post is sticky search
+        //     while(response.threads[i].posts[0].sticky == 1 || !response.threads[i].posts) {
+        //         i = Math.floor((Math.random() * response.threads.length));
+        //     }
+
+        //     let title = response.threads[i].posts[0].sub;
+        //     let description = response.threads[i].posts[0].com;
+        //     let boardName = boards.getName(args.board);
+
+        //     // IF => No title or description then reinitialize variables
+        //     if (!title) { title = 'No title'; }
+        //     if (!description) { description = 'No description'; }
+        //     if (!boardName) { boardName = args.board; }
+
+        //     console.log(response.threads[i].posts[0]);
+
+        //     const embed = new MessageEmbed()
+        //         .setAuthor(message.member.user.tag, message.member.user.displayAvatarURL())
+        //         .setColor(message.member ? message.member.displayHexColor : 'RANDOM')
+        //         .setTitle(turndown.turndown(title))
+        //         .setDescription(turndown.turndown(description))
+        //         .setImage(`https://i.4cdn.org/${args.board}/${response.threads[i].posts[0].tim}${response.threads[i].posts[0].ext}`)
+        //         .setURL(`https://boards.4channel.org/${args.board}/thread/${response.threads[i].posts[0].no}/${response.threads[i].posts[0].semantic_url}`)
+        //         .setFooter(`${boardName} | ${response.threads[i].posts[0].name} | ${response.threads[i].posts[0].no}  | ${response.threads[i].posts[0].now}`);
+
+        //     // IF => File type doesn't work on embed message then send it as a link
+        //     if (response.threads[i].posts[0].ext == '.webm' || response.threads[i].posts[0].ext == '.pdf' || response.threads[i].posts[0].ext == '.swf') {
+        //         message.channel.send(embed);
+        //         message.channel.send(`https://i.4cdn.org/${args.board}/${response.threads[i].posts[0].tim}${response.threads[i].posts[0].ext}`);
+        //     } else {
+        //         message.channel.send(embed);
+        //     }
+
+        // })
+        //     .catch((err) => {
+        //         if (err.type == 'invalid-json') return message.channel.send('I couldn\'t find this board! Are you sure you put a valid board?');
+        //         console.error(err);
+        //         return message.channel.send('Uh-oh, an error has occurred! Please try again!');
+        //     });
 
     }
 }

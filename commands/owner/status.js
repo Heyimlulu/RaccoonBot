@@ -24,11 +24,11 @@ class StatusCommand extends Command {
         });
     }
 
-    exec(message, args) {
+    async exec(message, args) {
 
-        this.client.user.setActivity(args.status);
+        await this.client.user.setActivity(args.status);
 
-        message.channel.send(`Status have been set to **${args.status}**`);
+        await message.channel.send(`Status have been set to **${args.status}**`);
 
     }
 }

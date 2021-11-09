@@ -31,7 +31,7 @@ class FeedbackCommand extends Command {
         });
     }
 
-    exec(message, args) {
+    async exec(message, args) {
 
         const embed = new Discord.MessageEmbed()
             .setAuthor(`${message.author.tag} (${message.author.id})`, message.author.displayAvatarURL())
