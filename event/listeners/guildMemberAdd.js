@@ -25,8 +25,8 @@ class guildMemberAddListener extends Listener {
             //const channel = this.client.channels.resolve(welcome.get('channelID'));
             const channel = this.client.channels.resolve('881623587335860275');
 
-            /*
-            let welcomeMessage = welcome.get('message');
+            //let welcomeMessage = welcome.get('message');
+            let welcomeMessage = 'Hey! [memberPing] just joined the server 🦝 **([server])**';
 
             let invite = new RegExp(/(https?:\/\/)?(www\.)?discord(?:app\.com|\.gg)[/invite/]?(?:(?!.*[Ii10OolL]).[a-zA-Z0-9]{5,6}|[a-zA-Z0-9-]{2,32})/g);
 
@@ -43,9 +43,7 @@ class guildMemberAddListener extends Listener {
 
             return channel.send(welcomeMessage);
 
-             */
-
-            return channel.send(`${member.user} is curious and just joined the server 🦝`);
+            //return channel.send(`${member.user} just joined the server 🦝`);
         }
 
     }

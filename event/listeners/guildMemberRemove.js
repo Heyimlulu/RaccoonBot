@@ -23,8 +23,8 @@ class guildMemberAddListener extends Listener {
             //const channel = this.client.channels.resolve(bye.get('channelID'));
             const channel = this.client.channels.resolve('881623587335860275');
 
-            /*
-            let leaveMessage = bye.get('message');
+            //let leaveMessage = bye.get('message');
+            let leaveMessage = '[memberPing] just left the server 🦝';
 
             let invite = new RegExp(/(https?:\/\/)?(www\.)?discord(?:app\.com|\.gg)[/invite/]?(?:(?!.*[Ii10OolL]).[a-zA-Z0-9]{5,6}|[a-zA-Z0-9-]{2,32})/g);
 
@@ -41,9 +41,8 @@ class guildMemberAddListener extends Listener {
 
             return channel.send(leaveMessage);
 
-             */
 
-            return channel.send(`${member.user} just leave the server 🦝`);
+            //return channel.send(`${member.user} just leave the server 🦝`);
         }
     }
 }
