@@ -8,7 +8,7 @@
     "start": "node bot.js"
   },
   "dependencies": {
-    "@discordjs/opus": "^0.6.0",
+    "@discordjs/opus": "^0.7.0",
     "@google-cloud/storage": "^5.16.0",
     "@google-cloud/text-to-speech": "^3.3.1",
     "4chan-boards": "^2.0.1",
@@ -27,7 +27,7 @@
     "fluent-ffmpeg": "^2.1.2",
     "jimp": "^0.16.1",
     "meta-extractor": "^2.1.0",
-    "mysql2": "^2.3.2",
+    "mysql2": "^2.3.3",
     "pg": "^8.7.1",
     "sequelize": "^6.9.0",
     "superagent": "^6.1.0",
