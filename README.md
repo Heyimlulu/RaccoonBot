@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="75%" src="https://raw.githubusercontent.com/Heyimlulu/RaccoonBot/main/_design/banner.jpg?token=AOVT7O5IOKVEI5AY6P77ZFDBSLDXY" alt="RacoonBot" />
+  <img width="75%" src="https://raw.githubusercontent.com/Heyimlulu/RaccoonBot/main/_design/banner.jpg?token=AOVT7O2XO2AFYTX5DG4PC6DBT2RNC" alt="RacoonBot" />
 </p>
 
 <div align="center">
