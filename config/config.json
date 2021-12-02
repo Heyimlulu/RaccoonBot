@@ -7,10 +7,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "database": "raccoondb",
-    "username": "raccoondb",
-    "password": "uuuwppqxmpy0c42z",
-    "host": "app-5afda13a-bcc8-4423-b300-15f2be1b1b14-do-user-9714737-0.b.db.ondigitalocean.com",
+    "database": "defaultdb",
+    "username": "doadmin",
+    "password": "KzqyQjXVLTSponlq",
+    "host": "db-postgresql-fra1-29042-do-user-9714737-0.b.db.ondigitalocean.com",
     "dialect": "postgres",
     "logging": false
   }
