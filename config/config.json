@@ -7,7 +7,7 @@
     "dialect": "mysql"
   },
   "production": {
-    "database": "defaultdb",
+    "database": "raccoondb",
     "username": "doadmin",
     "password": "KzqyQjXVLTSponlq",
     "host": "db-postgresql-fra1-29042-do-user-9714737-0.b.db.ondigitalocean.com",
