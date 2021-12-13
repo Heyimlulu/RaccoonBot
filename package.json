@@ -14,7 +14,7 @@
     "4chan-boards": "^2.0.1",
     "asciify-image": "^0.1.8",
     "axios": "^0.24.0",
-    "body-parser": "^1.18.3",
+    "body-parser": "^1.19.1",
     "canvas": "^2.8.0",
     "cheerio": "^1.0.0-rc.10",
     "currency-converter-lt": "^1.1.4",
