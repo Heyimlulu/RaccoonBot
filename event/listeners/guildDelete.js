@@ -33,14 +33,12 @@ class GuildDeleteListener extends Listener {
         }
 
         async function guildCounter(url, auth, body) {
-
             await axios.post(url, body, {
-                'Content-Type': 'application/json',
-                'Authorization': auth
+                "Content-Type": "application/json",
+                "Authorization": auth
             })
                 .then((response) => console.log(response))
                 .catch((error) => console.log(error));
-
         }
 
         await guild.members.fetch();
