@@ -30,7 +30,7 @@
     "mysql2": "^2.3.3",
     "pg": "^8.7.1",
     "sequelize": "^6.12.5",
-    "superagent": "^7.0.0",
+    "superagent": "^7.0.1",
     "turndown": "^7.1.1",
     "ytdl-core": "^4.9.2"
   }
