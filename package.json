@@ -23,7 +23,7 @@
     "discord.js": "^12.5.3",
     "dotenv": "^16.0.0",
     "ffmpeg": "0.0.4",
-    "ffmpeg-static": "^4.4.1",
+    "ffmpeg-static": "^5.0.0",
     "fluent-ffmpeg": "^2.1.2",
     "jimp": "^0.16.1",
     "meta-extractor": "^2.1.0",
