@@ -32,6 +32,6 @@
     "sequelize": "^6.17.0",
     "superagent": "^7.1.1",
     "turndown": "^7.1.1",
-    "ytdl-core": "^4.10.1"
+    "ytdl-core": "^4.11.0"
   }
 }
