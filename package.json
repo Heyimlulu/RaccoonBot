@@ -16,7 +16,7 @@
     "axios": "^0.27.2",
     "body-parser": "^1.20.0",
     "canvas": "^2.9.1",
-    "cheerio": "^1.0.0-rc.10",
+    "cheerio": "^1.0.0-rc.11",
     "currency-converter-lt": "^1.3.0",
     "discord-akairo": "^8.1.0",
     "discord-buttons": "^4.0.0",
