@@ -8,7 +8,7 @@
     "start": "node bot.js"
   },
   "dependencies": {
-    "@discordjs/opus": "^0.7.0",
+    "@discordjs/opus": "^0.8.0",
     "@google-cloud/storage": "^6.2.2",
     "@google-cloud/text-to-speech": "^4.0.0",
     "4chan-boards": "^2.0.1",
