@@ -28,7 +28,7 @@
     "jimp": "^0.16.1",
     "meta-extractor": "^2.1.0",
     "mysql2": "^2.3.3",
-    "pg": "^8.7.3",
+    "pg": "^8.8.0",
     "sequelize": "^6.21.3",
     "superagent": "^8.0.0",
     "turndown": "^7.1.1",
