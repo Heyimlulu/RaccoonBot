@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@discordjs/opus": "^0.8.0",
-    "@google-cloud/storage": "^6.2.3",
+    "@google-cloud/storage": "^6.5.1",
     "@google-cloud/text-to-speech": "^4.0.0",
     "4chan-boards": "^2.0.1",
     "asciify-image": "^0.1.8",
