@@ -29,7 +29,7 @@
     "meta-extractor": "^2.1.0",
     "mysql2": "^2.3.3",
     "pg": "^8.7.3",
-    "sequelize": "^6.21.3",
+    "sequelize": "^6.28.0",
     "superagent": "^8.0.0",
     "turndown": "^7.1.1",
     "ytdl-core": "^4.11.0"
